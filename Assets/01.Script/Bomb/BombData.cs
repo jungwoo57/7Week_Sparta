@@ -15,7 +15,7 @@ public class BombData : ScriptableObject
 {
     [Header("Info")]
     public BombType bombType;
-    public string name;
+    public string bombName;
     public string description;
     public Sprite icon;
     public Color iconColor;
