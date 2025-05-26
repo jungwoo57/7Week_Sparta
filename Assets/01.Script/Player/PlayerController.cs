@@ -58,11 +58,11 @@ public class PlayerController : MonoBehaviour
         rigid.velocity = dir;
     }
 
-    public void Jump(InputAction.CallbackContext context)
+    public void OnJump(InputAction.CallbackContext context)
     {
-       if(context.phase == InputActionPhase.Started)
+       if(context.phase == InputActionPhase.Started && IsGround())
         {
-            rigid.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
+            rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         }
     }
     
