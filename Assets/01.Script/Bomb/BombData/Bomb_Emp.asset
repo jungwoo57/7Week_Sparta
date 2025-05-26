@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a700812f10d3ad43a57f4c97919533a, type: 3}
-  m_Name: Bomb_Bound
+  m_Name: Bomb_Emp
   m_EditorClassIdentifier: 
-  bombType: 1
-  name: 
+  bombType: 3
+  bombName: 
   description: 
   icon: {fileID: 0}
   iconColor: {r: 0, g: 0, b: 0, a: 0}
@@ -21,4 +21,8 @@ MonoBehaviour:
   explodePower: 0
   explodeRange: 0
   explodeTime: 0
-  stackAmount: 0
+  bombCooldown: 0
+  stackable: 0
+  maxStackAmount: 0
+  equipPrefab: {fileID: 0}
+  explodeSound: {fileID: 0}
