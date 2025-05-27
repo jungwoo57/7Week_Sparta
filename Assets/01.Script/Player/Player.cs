@@ -1,0 +1,56 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Player : MonoBehaviour
+{
+    public PlayerCondition condition;
+    public PlayerController controller;
+
+
+    public Transform bombPos; // 플레이어가 폭탄 들고있는 위치
+    public Transform bombSpawnPos; // 폭탄 소환 위치
+    public GameObject[] bomb; // 스테이지에서 필요한 폭탄 갯수 받아옴
+
+    private int curBombIndex; // 현재 들고 있는 폭탄번호
+    private int maxBombIndex; // 사용할 폭탄 종류 수 최개치 설정
+    private int useBombCount; // 사용한 폭탄 갯 수
+    private GameObject curBomb; //지금 들고 있는 폭탄
+    private void Awake()
+    {
+        condition = GetComponent<PlayerCondition>();
+        controller = GetComponent<PlayerController>();
+    }
+
+    private void Start()
+    {
+        Init();
+    }
+
+    public void Init()
+    {
+        // 스테이지에서 폭탄 종료 받아와서 bomb에 할당
+        maxBombIndex = bomb.Length;
+        curBombIndex = 0;
+        curBomb = Instantiate(bomb[curBombIndex], bombPos);
+        curBomb.transform.position = bombPos.localPosition;
+        Debug.Log("초기화 완료");
+    }
+    public void SpawnBomb()
+    {
+        // 폭탄 데이터 쿨타임 불러와서 쿨타임 아닐 때 소환
+        GameObject spawnBomb = Instantiate(bomb[curBombIndex], transform);
+        spawnBomb.transform.localPosition = bombSpawnPos.localPosition;
+        spawnBomb.AddComponent<Rigidbody>();
+        useBombCount++;
+    }
+
+
+    public void SwapBomb(int index)
+    {
+        if (index >= maxBombIndex) curBombIndex = maxBombIndex;
+        curBombIndex = index-1;
+        curBomb = bomb[curBombIndex];
+        Debug.Log("폭탄이 바뀌었습니다" + curBombIndex);
+    }
+}
