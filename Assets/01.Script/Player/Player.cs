@@ -33,14 +33,14 @@ public class Player : MonoBehaviour
         maxBombIndex = bomb.Length;
         curBombIndex = 0;
         curBomb = Instantiate(bomb[curBombIndex], bombPos);
-        curBomb.transform.position = bombPos.localPosition;
+        curBomb.transform.position = bombPos.position;
         Debug.Log("ÃÊ±âÈ­ ¿Ï·á");
     }
     public void SpawnBomb()
     {
         // ÆøÅº µ¥ÀÌÅÍ ÄðÅ¸ÀÓ ºÒ·¯¿Í¼­ ÄðÅ¸ÀÓ ¾Æ´Ò ¶§ ¼ÒÈ¯
-        GameObject spawnBomb = Instantiate(bomb[curBombIndex], transform);
-        spawnBomb.transform.localPosition = bombSpawnPos.localPosition;
+        GameObject spawnBomb = Instantiate(bomb[curBombIndex]);
+        spawnBomb.transform.position = bombSpawnPos.position;
         spawnBomb.AddComponent<Rigidbody>();
         useBombCount++;
     }
@@ -48,9 +48,15 @@ public class Player : MonoBehaviour
 
     public void SwapBomb(int index)
     {
+        if (index == curBombIndex + 1) return;
         if (index >= maxBombIndex) curBombIndex = maxBombIndex;
         curBombIndex = index-1;
-        curBomb = bomb[curBombIndex];
+        if(curBomb != null)
+        {
+            Destroy(curBomb);
+        }
+        curBomb = Instantiate(bomb[curBombIndex], bombPos);
+        curBomb.transform.position = bombPos.position;
         Debug.Log("ÆøÅºÀÌ ¹Ù²î¾ú½À´Ï´Ù" + curBombIndex);
     }
 }
