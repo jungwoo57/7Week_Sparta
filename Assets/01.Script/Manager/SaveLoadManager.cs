@@ -1,50 +1,14 @@
 using System.IO;
 using UnityEngine;
 
-public class StageData
-{
-    public int stageIndex;
-}
-
 public class SaveLoadManager : MonoBehaviour
 {
-    #region Singleton
-    private static SaveLoadManager _instance;
-    public static SaveLoadManager Instance
-    {
-        get
-        {
-            if(_instance == null)
-            {
-                _instance = new GameObject("SaveLoadManager").AddComponent<SaveLoadManager>();
-            }
-            return _instance;
-        }
-    }
-
-    private void Singleton()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
-    #endregion
-
-    public StageData stageData = new StageData();
     private string path;
+    public Stage stageData = new Stage();
+
 
     private void Awake()
     {
-        Singleton();
         path = Application.persistentDataPath + "/save";
     }
 
@@ -66,7 +30,7 @@ public class SaveLoadManager : MonoBehaviour
         try
         {
             string data = File.ReadAllText(path);
-            stageData = JsonUtility.FromJson<StageData>(data);
+            stageData = JsonUtility.FromJson<Stage>(data);
         }
         catch (IOException e)
         {

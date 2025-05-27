@@ -2,13 +2,6 @@
 using System;
 using System.Collections.Generic;
 
-public enum StageState
-{
-    Open,
-    Cleared,
-    Locked
-}
-
 [Serializable]
 public class Progress
 {
