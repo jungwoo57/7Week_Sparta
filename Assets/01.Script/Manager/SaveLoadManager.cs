@@ -1,59 +1,35 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class StageData
+public class SaveData
 {
-    public int stageIndex;
+    public int id;
+    public StageState stageState;
 }
 
 public class SaveLoadManager : MonoBehaviour
 {
-    #region Singleton
-    private static SaveLoadManager _instance;
-    public static SaveLoadManager Instance
-    {
-        get
-        {
-            if(_instance == null)
-            {
-                _instance = new GameObject("SaveLoadManager").AddComponent<SaveLoadManager>();
-            }
-            return _instance;
-        }
-    }
-
-    private void Singleton()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            if (_instance != this)
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
-    #endregion
-
-    public StageData stageData = new StageData();
     private string path;
+    public List<SaveData> stageDataList = new();
 
     private void Awake()
     {
-        Singleton();
-        path = Application.persistentDataPath + "/save";
+        path = Application.dataPath + "/save";
     }
 
     public void SaveData()
     {
+        for (int i = 0; i < GameManager.Instance.StageManager.stages.Count; i++)
+        {
+            stageDataList[i].id = GameManager.Instance.StageManager.stages[i].Id;
+            stageDataList[i].stageState = GameManager.Instance.StageManager.stages[i].StageState;
+        }
+
         try
         {
-            string data = JsonUtility.ToJson(stageData);
-            File.WriteAllText(path, data);
+            string json = JsonUtility.ToJson(stageDataList);
+            File.WriteAllText(path, json);
         }
         catch (IOException e)
         {
@@ -61,16 +37,24 @@ public class SaveLoadManager : MonoBehaviour
         }
     }
 
-    public void LoadData()
+    public List<SaveData> LoadData()
     {
         try
         {
-            string data = File.ReadAllText(path);
-            stageData = JsonUtility.FromJson<StageData>(data);
+            if (!File.Exists(path))
+            {
+                Debug.LogWarning("Save file not found.");
+                return new List<SaveData>();
+            }
+
+            string json = File.ReadAllText(path);
+            List<SaveData> dataList = JsonUtility.FromJson<List<SaveData>>(json);
+            return dataList;
         }
         catch (IOException e)
         {
             Debug.LogError($"Load Failed: {e.Message}");
+            return new List<SaveData>();
         }
     }
 }

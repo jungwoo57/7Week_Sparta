@@ -18,10 +18,11 @@ public class PlayerController : MonoBehaviour
     private Vector2 curMovement;
 
     private Rigidbody rigid;
-
+    private Player player;
 
     private void Awake()
     {
+        player = GetComponent<Player>();
         rigid = GetComponent<Rigidbody>();
     }
     private void Start()
@@ -99,5 +100,42 @@ public class PlayerController : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void SpawnBomb(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Started)
+        {
+            player.SpawnBomb();
+        }
+    }
+
+    public void SwapBomb1(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            player.SwapBomb(1);
+        }
+    }
+    public void SwapBomb2(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            player.SwapBomb(2);
+        }
+    }
+    public void SwapBomb3(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            player.SwapBomb(3);
+        }
+    }
+    public void SwapBomb4(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            player.SwapBomb(4);
+        }
     }
 }
