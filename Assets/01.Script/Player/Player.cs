@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
-{
-    public PlayerCondition condition;
+{ 
     public PlayerController controller;
 
 
@@ -18,7 +17,6 @@ public class Player : MonoBehaviour
     private GameObject curBomb; //지금 들고 있는 폭탄
     private void Awake()
     {
-        condition = GetComponent<PlayerCondition>();
         controller = GetComponent<PlayerController>();
     }
 
@@ -30,6 +28,7 @@ public class Player : MonoBehaviour
     public void Init()
     {
         // 스테이지에서 폭탄 종료 받아와서 bomb에 할당
+        useBombCount = 0;
         maxBombIndex = bomb.Length -1 ;
         curBombIndex = 0;
         curBomb = Instantiate(bomb[curBombIndex], bombPos);
