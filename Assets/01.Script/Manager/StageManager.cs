@@ -1,70 +1,82 @@
+using System.Collections.Generic;
 using UnityEngine;
-
-public class Stage
-{
-    // 추후 Stage.cs 구현되면 제거
-}
 
 public class StageManager : MonoBehaviour
 {
-    #region Singleton
-    private static StageManager _instance;
-    public static StageManager Instance
+    public Stage curStage;
+    public List<Stage> stages = new List<Stage>();
+
+    //Player player;
+
+    private void Start()
     {
-        get
+
+        SetStages();
+        //UpdateStageStates();
+        GameManager.Instance.SaveLoadManager.SaveData();
+    }
+
+    private void Update()
+    {
+        CheckClearCondition();
+    }
+
+    private void SetStages()
+    {
+        GameObject stageParent = GameObject.Find("Stage");
+        if (stageParent == null)
         {
-            if(_instance == null)
+            Debug.LogError("Stage is missing!");
+            return;
+        }
+
+        for (int i = 0; i < stageParent.transform.childCount; i++)
+        {
+            Transform child = stageParent.transform.GetChild(i);
+            Stage stageComponent = child.GetComponent<Stage>();
+
+            if (stageComponent != null)
             {
-                _instance = new GameObject("StageManager").AddComponent<StageManager>();
+                stages.Add(stageComponent);
             }
-            return _instance;
-        }
-    }
-
-    private void Singleton()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            if (_instance != this)
+            else
             {
-                Destroy(gameObject);
+                Debug.LogError("Stage component is missing!");
             }
         }
     }
-    #endregion
-    
-    private Stage _curStage;
-    public Stage CurStage
+
+    public void UpdateStageStates()
     {
-        get { return _curStage; }
+        for (int i = 0; i < stages.Count; i++)
+        {
+            stages[i].StageState = GameManager.Instance.SaveLoadManager.stageDataList[i].stageState;
+        }
     }
 
-
-    private void Awake()
+    public void LoadStage(int stageId)
     {
-        Singleton();
+        // ReStart 버튼으로 스테이지 정보 초기화
+        curStage = stages[stageId];
+
+        //player.transform = curStage.PlayerStartPosition;
+        // camera.transform = _curStage.CameraStartPosition;
     }
 
-    public void LoadStage(Stage stage)
+    private void CheckClearCondition()
     {
-        _curStage = stage;
-        /**
-        player.transform = _curStage.PlayerTransformInfo (이런 느낌?)
-        camera.transform = _curStage.CameraInfo (이런 느낌?)
-        */
+        // 플레이어의 위치 체크
+        // 만약 플레이어의 위치가 curStage.Destination과 일정 거리 사이라면
+        // ClaerStage() 호출
     }
 
-    public void ClearStage()
+    private void ClearStage()
     {
-        /**
-        스테이지 인덱스++
-        _curStage = nextStage
-        LoadStage(_curStage);
-        */
+        // 현재 스테이지의 State를 Cleared로 바꾸고, 다음 스테이지를 Open한다.
+        stages[curStage.Id].SetState(StageState.Cleared);
+        stages[curStage.Id + 1].SetState(StageState.Open);
+
+        // 다음 스테이지를 로드
+        LoadStage(curStage.Id + 1);
     }
 }

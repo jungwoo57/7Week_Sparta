@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,13 +36,38 @@ public class GameManager : MonoBehaviour
 
 
     public SaveLoadManager SaveLoadManager { get; private set; }
-    public StageManager StageManager {get; private set; }
+    public StageManager StageManager { get; private set; }
+    public PlayerManager PlayerManager { get; private set; }
     
     private void Awake()
     {
         Singleton();
-        SaveLoadManager = GetComponent<SaveLoadManager>();
-        StageManager = GetComponent<StageManager>();
+        InitManagers();
+    }
+
+    // Manager들 초기화 및 DonDestroyOnLoad 처리
+    private void InitManagers()
+    {
+        SaveLoadManager = FindObjectOfType<SaveLoadManager>();
+        if (SaveLoadManager == null)
+        {
+            SaveLoadManager = new GameObject("SaveLoadManager").AddComponent<SaveLoadManager>();
+            DontDestroyOnLoad(SaveLoadManager);
+        }
+
+        StageManager = FindObjectOfType<StageManager>();
+        if (StageManager == null)
+        {
+            StageManager = new GameObject("StageManager").AddComponent<StageManager>();
+            DontDestroyOnLoad(StageManager);
+        }
+
+        PlayerManager = FindObjectOfType<PlayerManager>();
+        if (PlayerManager == null)
+        {
+            PlayerManager = new GameObject("PlayerManager").AddComponent<PlayerManager>();
+            DontDestroyOnLoad(PlayerManager);
+        }
     }
 
     public void ExitGame()
