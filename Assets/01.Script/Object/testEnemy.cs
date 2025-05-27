@@ -6,19 +6,19 @@ using UnityEngine;
 public class testEnemy : MonoBehaviour, IAffected
 {
     bool isCondition = false;
-    public void OnAffected(Vector3 pos, float force, float radius, BombType bombType)
+    public void OnAffected(Vector3 pos, float force, float radius, TestBombType bombType)
     {
         if (isCondition) return;
 
         switch (bombType)
         {
-            case BombType.Emp:
+            case TestBombType.Emp:
                 StartCoroutine(Stunned());
                 break;
-            case BombType.Ice:
+            case TestBombType.Ice:
                 StartCoroutine(Freeze());
                 break;
-            case BombType.Flame:
+            case TestBombType.Flame:
                 StartCoroutine(Burn());
                 break;
         }

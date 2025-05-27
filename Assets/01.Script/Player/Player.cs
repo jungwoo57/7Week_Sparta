@@ -18,6 +18,7 @@ public class Player : MonoBehaviour, IAffected
     public GameObject curBomb; //���� ��� �ִ� ��ź
 
     private Animator anim;
+    private Rigidbody rigid;
     private void Awake()
     {
         controller = GetComponent<PlayerController>();
@@ -67,5 +68,8 @@ public class Player : MonoBehaviour, IAffected
         Debug.Log("��ź�� �ٲ�����ϴ�" + curBombIndex);
     }
 
-    public void OnAffected(Vector3 pos, float force, float radius, BombType type) { }
+    public void OnAffected(Vector3 pos, float force, float radius, TestBombType type) 
+    {
+        rigid?.AddExplosionForce(force, pos, radius);
+    }
 }
