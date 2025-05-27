@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,7 +36,8 @@ public class GameManager : MonoBehaviour
 
 
     public SaveLoadManager SaveLoadManager { get; private set; }
-    public StageManager StageManager {get; private set; }
+    public StageManager StageManager { get; private set; }
+    public PlayerManager PlayerManager { get; private set; }
     
     private void Awake()
     {
@@ -58,6 +60,13 @@ public class GameManager : MonoBehaviour
         {
             StageManager = new GameObject("StageManager").AddComponent<StageManager>();
             DontDestroyOnLoad(StageManager);
+        }
+
+        PlayerManager = FindObjectOfType<PlayerManager>();
+        if (PlayerManager == null)
+        {
+            PlayerManager = new GameObject("PlayerManager").AddComponent<PlayerManager>();
+            DontDestroyOnLoad(PlayerManager);
         }
     }
 
