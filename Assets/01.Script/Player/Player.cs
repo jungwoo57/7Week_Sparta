@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IAffected
 { 
     public PlayerController controller;
 
@@ -15,9 +15,12 @@ public class Player : MonoBehaviour
     private int maxBombIndex; // »ç¿ëÇÒ ÆøÅº Á¾·ù ¼ö ÃÖ°³Ä¡ ¼³Á¤
     public int useBombCount; // »ç¿ëÇÑ ÆøÅº °¹ ¼ö
     public GameObject curBomb; //Áö±Ý µé°í ÀÖ´Â ÆøÅº
+
+    private Animator anim;
     private void Awake()
     {
         controller = GetComponent<PlayerController>();
+        anim = GetComponent<Animator>();
     }
 
     private void Start()
@@ -42,6 +45,7 @@ public class Player : MonoBehaviour
         spawnBomb.transform.position = bombSpawnPos.position;
         spawnBomb.AddComponent<Rigidbody>();
         useBombCount++;
+        anim.SetTrigger("SpawnBomb");
     }
 
 
@@ -61,4 +65,6 @@ public class Player : MonoBehaviour
         curBomb.transform.position = bombPos.position;
         Debug.Log("ÆøÅºÀÌ ¹Ù²î¾ú½À´Ï´Ù" + curBombIndex);
     }
+
+    public void OnAffected(Vector3 pos, float force, float radius) { }
 }
