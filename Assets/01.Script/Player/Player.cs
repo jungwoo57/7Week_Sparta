@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     private int curBombIndex; // 현재 들고 있는 폭탄번호
     private int maxBombIndex; // 사용할 폭탄 종류 수 최개치 설정
     public int useBombCount; // 사용한 폭탄 갯 수
-    private GameObject curBomb; //지금 들고 있는 폭탄
+    public GameObject curBomb; //지금 들고 있는 폭탄
     private void Awake()
     {
         controller = GetComponent<PlayerController>();
