@@ -13,9 +13,9 @@ public class Destructible : MonoBehaviour, IAffected
         curHealth = maxHealth;
     }
 
-    public void OnAffected(Vector3 pos, float force, float radius, BombType type)
+    public void OnAffected(Vector3 pos, float force, float radius, TestBombType type)
     {
-        if (type != BombType.Emp)
+        if (type != TestBombType.Emp)
         {
             curHealth -= force;
             if (curHealth <= 0f)

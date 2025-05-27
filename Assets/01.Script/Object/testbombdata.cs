@@ -1,7 +1,7 @@
 
     namespace _01.Script.Object
     {
-        public enum BombType
+        public enum TestBombType
         {
             Basic,
             Ice,
