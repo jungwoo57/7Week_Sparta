@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using _01.Script.Object;
 using UnityEngine;
 
 public class testbomb : MonoBehaviour
 {
     [SerializeField] private float radius = 5f;
     [SerializeField] private float force = 700f;
-
+    [SerializeField] private BombType bombType;
     public void Explode()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
@@ -17,7 +18,7 @@ public class testbomb : MonoBehaviour
 
             foreach (var reactable in reactables)
             {
-                reactable.OnAffected(transform.position, force, radius);
+                reactable.OnAffected(transform.position, force, radius, bombType);
             }
         }
     }
