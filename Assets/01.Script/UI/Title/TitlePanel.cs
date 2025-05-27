@@ -5,13 +5,19 @@ using UnityEngine.UI;
 public class TitlePanel : MonoBehaviour
 {
     [SerializeField]
+    private GameObject stageSelectPanel;
+
+    [SerializeField]
     private GameObject saveSlotPanel;
 
     public void OnClickStartButton()
     {
-        // SceneManager.LoadScene 혹은 필요하면 비동기 로드씬 매니저
+        stageSelectPanel.SetActive(true);
+        this.gameObject.SetActive(false);
     }
 
+    
+    // 지금은 안 쓰는 코드 (최종까지 필요 없을 시 제거 필요)
     public void OnClickLoadButton()
     {
         saveSlotPanel.SetActive(true);
