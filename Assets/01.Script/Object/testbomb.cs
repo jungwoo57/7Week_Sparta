@@ -1,30 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
-using _01.Script.Object;
 using UnityEngine;
 
-public class testbomb : MonoBehaviour
+namespace _01.Script.Object
 {
-    [SerializeField] private float radius = 5f;
-    [SerializeField] private float force = 700f;
-    [SerializeField] private BombType bombType;
-    public void Explode()
+    public class testbomb : MonoBehaviour
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
-
-        foreach (Collider hit in colliders)
+        //ScriptableObject에서 불러올 것들
+        [SerializeField] private float radius;
+        [SerializeField] private float force;
+        [SerializeField] private BombType bombType;
+        
+        public void Explode()
         {
-            IAffected[] reactables = hit.GetComponents<IAffected>();
+            Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
 
-            foreach (var reactable in reactables)
+            foreach (Collider hit in colliders)
             {
-                reactable.OnAffected(transform.position, force, radius, bombType);
+                IAffected[] reactables = hit.GetComponents<IAffected>();
+
+                foreach (var reactable in reactables)
+                {
+                    reactable.OnAffected(transform.position, force, radius, bombType);
+                }
             }
         }
-    }
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, radius);
+        }
     }
 }
