@@ -8,26 +8,19 @@ public class testEnemy : MonoBehaviour, IAffected
     bool isCondition = false;
     public void OnAffected(Vector3 pos, float force, float radius, BombType bombType)
     {
-        if (bombType == BombType.Emp)
+        if (isCondition) return;
+
+        switch (bombType)
         {
-            if (!isCondition)
-            {
+            case BombType.Emp:
                 StartCoroutine(Stunned());
-            }
-        }
-        if (bombType == BombType.Ice)
-        {
-            if (!isCondition)
-            {
+                break;
+            case BombType.Ice:
                 StartCoroutine(Freeze());
-            }
-        }
-        if (bombType == BombType.Flame)
-        {
-            if (!isCondition)
-            {
+                break;
+            case BombType.Flame:
                 StartCoroutine(Burn());
-            }
+                break;
         }
     }
 

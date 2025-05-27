@@ -15,12 +15,13 @@ public class Destructible : MonoBehaviour, IAffected
 
     public void OnAffected(Vector3 pos, float force, float radius, BombType type)
     {
-        if (type == BombType.Emp) return;
-        
-        curHealth -= force;
-        if (curHealth <= 0f)
+        if (type != BombType.Emp)
         {
-            Break();
+            curHealth -= force;
+            if (curHealth <= 0f)
+            {
+                Break();
+            }
         }
     }
     private void Break()

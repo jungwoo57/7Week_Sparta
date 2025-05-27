@@ -10,9 +10,6 @@ public class Affected : MonoBehaviour, IAffected
         if(type != BombType.Basic) return;
         
         Rigidbody rigid = GetComponent<Rigidbody>();
-        if (rigid != null)
-        {
-            rigid.AddExplosionForce(force, pos, radius);
-        }
+        rigid?.AddExplosionForce(force, pos, radius);
     }
 }
