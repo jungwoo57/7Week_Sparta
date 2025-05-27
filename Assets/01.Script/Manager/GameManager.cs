@@ -33,28 +33,23 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    /**Stage class 구현 후
-    private Stage _curStage;
-    public Stage CurStage
-    {
-        get { return _curStage; }
-    }*/
 
-    /**Player class 구현 후
-    public Player player;*/
+    public SaveLoadManager SaveLoadManager { get; private set; }
+    public StageManager StageManager {get; private set; }
     
     private void Awake()
     {
         Singleton();
-    }
-
-    public void Save()
-    {
-
+        SaveLoadManager = GetComponent<SaveLoadManager>();
+        StageManager = GetComponent<StageManager>();
     }
 
     public void ExitGame()
     {
-
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }
