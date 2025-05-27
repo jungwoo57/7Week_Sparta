@@ -9,8 +9,8 @@ public interface IInstallable
 
 public class BombEquip : MonoBehaviour, IInstallable
 {
+    public Vector3 installDistance;
     public float installDelay;
-    public float installDistance;
     public float bombCooldown;
     private bool _isInstalling;
     private bool _isCooldown;

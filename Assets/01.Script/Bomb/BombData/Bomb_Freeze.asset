@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a700812f10d3ad43a57f4c97919533a, type: 3}
-  m_Name: Bomb_Emp
+  m_Name: Bomb_Freeze
   m_EditorClassIdentifier: 
   bombType: 3
   bombName: 

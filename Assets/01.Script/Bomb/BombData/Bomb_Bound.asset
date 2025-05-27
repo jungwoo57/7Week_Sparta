@@ -19,8 +19,8 @@ MonoBehaviour:
   iconColor: {r: 0, g: 0, b: 0, a: 0}
   bombPrefab: {fileID: 0}
   explodePower: 0
-  explodeRange: 0
-  explodeTime: 0
+  explodeRange: 2
+  explodeTime: 1
   bombCooldown: 0
   stackable: 0
   maxStackAmount: 0

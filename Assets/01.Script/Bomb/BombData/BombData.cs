@@ -8,7 +8,7 @@ public enum BombType
     Bound,
     Demolition,
     Portal,
-    Emp,
+    Freeze,
     Laser,
 }
 
@@ -29,6 +29,7 @@ public class BombData : ScriptableObject
     public float explodeRange;
     public float explodeTime;
     public float bombCooldown;
+    public float freezeDuration;
     
     [Header("Stackable")]
     public bool stackable;
