@@ -40,8 +40,25 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Singleton();
-        SaveLoadManager = GetComponent<SaveLoadManager>();
-        StageManager = GetComponent<StageManager>();
+        InitManagers();
+    }
+
+    // Manager들 초기화 및 DonDestroyOnLoad 처리
+    private void InitManagers()
+    {
+        SaveLoadManager = FindObjectOfType<SaveLoadManager>();
+        if (SaveLoadManager == null)
+        {
+            SaveLoadManager = new GameObject("SaveLoadManager").AddComponent<SaveLoadManager>();
+            DontDestroyOnLoad(SaveLoadManager);
+        }
+
+        StageManager = FindObjectOfType<StageManager>();
+        if (StageManager == null)
+        {
+            StageManager = new GameObject("StageManager").AddComponent<StageManager>();
+            DontDestroyOnLoad(StageManager);
+        }
     }
 
     public void ExitGame()
