@@ -49,6 +49,7 @@ public class Player : MonoBehaviour, IAffected
         GameObject spawnBomb = Instantiate(bomb[curBombIndex].bombPrefab);
         spawnBomb.transform.position = bombSpawnPos.position;
         spawnBomb.AddComponent<Rigidbody>();
+        spawnBomb.AddComponent<BombAction>();
         useBombCount++;
         anim.SetTrigger("SpawnBomb");
     }

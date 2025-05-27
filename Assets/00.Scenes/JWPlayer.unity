@@ -2882,6 +2882,14 @@ PrefabInstance:
       propertyPath: curBomb
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5320190823415354988, guid: 4bcd3a89b327aa94c92c2cd755e600d7, type: 3}
+      propertyPath: bomb.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 22a18c07501c3d94ab7780c619c10e77, type: 2}
+    - target: {fileID: 5320190823415354988, guid: 4bcd3a89b327aa94c92c2cd755e600d7, type: 3}
+      propertyPath: bomb.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0b468acda5970ac4b9d2ae08a70074d5, type: 2}
     - target: {fileID: 6659029150165546105, guid: 4bcd3a89b327aa94c92c2cd755e600d7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
