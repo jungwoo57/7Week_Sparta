@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _01.Script.Object;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IAffected
@@ -7,14 +8,14 @@ public class Player : MonoBehaviour, IAffected
     public PlayerController controller;
 
 
-    public Transform bombPos; // ÇÃ·¹ÀÌ¾î°¡ ÆøÅº µé°íÀÖ´Â À§Ä¡
-    public Transform bombSpawnPos; // ÆøÅº ¼ÒÈ¯ À§Ä¡
-    public GameObject[] bomb; // ½ºÅ×ÀÌÁö¿¡¼­ ÇÊ¿äÇÑ ÆøÅº °¹¼ö ¹Þ¾Æ¿È
+    public Transform bombPos; // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½Åº ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½Ä¡
+    public Transform bombSpawnPos; // ï¿½ï¿½Åº ï¿½ï¿½È¯ ï¿½ï¿½Ä¡
+    public GameObject[] bomb; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½Åº ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½
 
-    private int curBombIndex; // ÇöÀç µé°í ÀÖ´Â ÆøÅº¹øÈ£
-    private int maxBombIndex; // »ç¿ëÇÒ ÆøÅº Á¾·ù ¼ö ÃÖ°³Ä¡ ¼³Á¤
-    public int useBombCount; // »ç¿ëÇÑ ÆøÅº °¹ ¼ö
-    public GameObject curBomb; //Áö±Ý µé°í ÀÖ´Â ÆøÅº
+    private int curBombIndex; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½Åºï¿½ï¿½È£
+    private int maxBombIndex; // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Åº ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö°ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
+    public int useBombCount; // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Åº ï¿½ï¿½ ï¿½ï¿½
+    public GameObject curBomb; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½Åº
 
     private Animator anim;
     private void Awake()
@@ -30,17 +31,17 @@ public class Player : MonoBehaviour, IAffected
 
     public void Init()
     {
-        // ½ºÅ×ÀÌÁö¿¡¼­ ÆøÅº Á¾·á ¹Þ¾Æ¿Í¼­ bomb¿¡ ÇÒ´ç
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Åº ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿Í¼ï¿½ bombï¿½ï¿½ ï¿½Ò´ï¿½
         useBombCount = 0;
         maxBombIndex = bomb.Length -1 ;
         curBombIndex = 0;
         curBomb = Instantiate(bomb[curBombIndex], bombPos);
         curBomb.transform.position = bombPos.position;
-        Debug.Log("ÃÊ±âÈ­ ¿Ï·á");
+        Debug.Log("ï¿½Ê±ï¿½È­ ï¿½Ï·ï¿½");
     }
     public void SpawnBomb()
     {
-        // ÆøÅº µ¥ÀÌÅÍ ÄðÅ¸ÀÓ ºÒ·¯¿Í¼­ ÄðÅ¸ÀÓ ¾Æ´Ò ¶§ ¼ÒÈ¯
+        // ï¿½ï¿½Åº ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½Í¼ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ ï¿½ï¿½È¯
         GameObject spawnBomb = Instantiate(bomb[curBombIndex]);
         spawnBomb.transform.position = bombSpawnPos.position;
         spawnBomb.AddComponent<Rigidbody>();
@@ -63,8 +64,8 @@ public class Player : MonoBehaviour, IAffected
         }
         curBomb = Instantiate(bomb[curBombIndex], bombPos);
         curBomb.transform.position = bombPos.position;
-        Debug.Log("ÆøÅºÀÌ ¹Ù²î¾ú½À´Ï´Ù" + curBombIndex);
+        Debug.Log("ï¿½ï¿½Åºï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½" + curBombIndex);
     }
 
-    public void OnAffected(Vector3 pos, float force, float radius) { }
+    public void OnAffected(Vector3 pos, float force, float radius, BombType type) { }
 }
