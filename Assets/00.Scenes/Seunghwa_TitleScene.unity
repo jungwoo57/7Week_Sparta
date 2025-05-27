@@ -1200,7 +1200,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &521045000
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1239,6 +1239,7 @@ MonoBehaviour:
   titlePanel: {fileID: 541058517}
   contentBox: {fileID: 262309820}
   stageSelectButtonPrefab: {fileID: 5565599678035929789, guid: 637c4a02444af6d4498560c049e2150d, type: 3}
+  pageText: {fileID: 1969907359}
   pageLeftButton: {fileID: 1825178950}
   pageRightButton: {fileID: 1389655360}
 --- !u!1 &541058517
@@ -1257,7 +1258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &541058518
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1965,7 +1966,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1389655361}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 521045001}
+        m_TargetAssemblyTypeName: StageSelectPanel, Assembly-CSharp
+        m_MethodName: OnClickRightPage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1389655361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2330,7 +2343,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1825178948}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 521045001}
+        m_TargetAssemblyTypeName: StageSelectPanel, Assembly-CSharp
+        m_MethodName: OnClickLeftPage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1886769876
 GameObject:
   m_ObjectHideFlags: 0
@@ -3026,7 +3051,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1997183799742592556, guid: 637c4a02444af6d4498560c049e2150d, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1997183799742592556, guid: 637c4a02444af6d4498560c049e2150d, type: 3}
       propertyPath: m_AnchorMin.x
@@ -3034,15 +3059,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1997183799742592556, guid: 637c4a02444af6d4498560c049e2150d, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1997183799742592556, guid: 637c4a02444af6d4498560c049e2150d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 362.5
       objectReference: {fileID: 0}
     - target: {fileID: 1997183799742592556, guid: 637c4a02444af6d4498560c049e2150d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 1997183799742592556, guid: 637c4a02444af6d4498560c049e2150d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3074,11 +3099,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1997183799742592556, guid: 637c4a02444af6d4498560c049e2150d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 181.25
       objectReference: {fileID: 0}
     - target: {fileID: 1997183799742592556, guid: 637c4a02444af6d4498560c049e2150d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -75
       objectReference: {fileID: 0}
     - target: {fileID: 1997183799742592556, guid: 637c4a02444af6d4498560c049e2150d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
