@@ -112,18 +112,30 @@ public class PlayerController : MonoBehaviour
 
     public void SwapBomb1(InputAction.CallbackContext context)
     {
-        player.SwapBomb(1);
+        if (context.phase == InputActionPhase.Started)
+        {
+            player.SwapBomb(1);
+        }
     }
     public void SwapBomb2(InputAction.CallbackContext context)
     {
-        player.SwapBomb(2);
+        if (context.phase == InputActionPhase.Started)
+        {
+            player.SwapBomb(2);
+        }
     }
     public void SwapBomb3(InputAction.CallbackContext context)
     {
-        player.SwapBomb(3);
+        if (context.phase == InputActionPhase.Started)
+        {
+            player.SwapBomb(3);
+        }
     }
     public void SwapBomb4(InputAction.CallbackContext context)
     {
-        player.SwapBomb(4);
+        if (context.phase == InputActionPhase.Started)
+        {
+            player.SwapBomb(4);
+        }
     }
 }

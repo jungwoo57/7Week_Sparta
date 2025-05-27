@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
     private int curBombIndex; // ÇöÀç µé°í ÀÖ´Â ÆøÅº¹øÈ£
     private int maxBombIndex; // »ç¿ëÇÒ ÆøÅº Á¾·ù ¼ö ÃÖ°³Ä¡ ¼³Á¤
-    private int useBombCount; // »ç¿ëÇÑ ÆøÅº °¹ ¼ö
+    public int useBombCount; // »ç¿ëÇÑ ÆøÅº °¹ ¼ö
     private GameObject curBomb; //Áö±Ý µé°í ÀÖ´Â ÆøÅº
     private void Awake()
     {
@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     public void Init()
     {
         // ½ºÅ×ÀÌÁö¿¡¼­ ÆøÅº Á¾·á ¹Þ¾Æ¿Í¼­ bomb¿¡ ÇÒ´ç
-        maxBombIndex = bomb.Length;
+        maxBombIndex = bomb.Length -1 ;
         curBombIndex = 0;
         curBomb = Instantiate(bomb[curBombIndex], bombPos);
         curBomb.transform.position = bombPos.position;
@@ -48,10 +48,13 @@ public class Player : MonoBehaviour
 
     public void SwapBomb(int index)
     {
-        if (index == curBombIndex + 1) return;
-        if (index >= maxBombIndex) curBombIndex = maxBombIndex;
-        curBombIndex = index-1;
-        if(curBomb != null)
+        curBombIndex = index - 1;
+        if (curBombIndex >= maxBombIndex)
+        {
+            curBombIndex = maxBombIndex;
+
+        }
+        if (curBomb != null)
         {
             Destroy(curBomb);
         }
