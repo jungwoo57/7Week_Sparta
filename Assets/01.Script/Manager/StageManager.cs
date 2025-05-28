@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,19 +6,48 @@ public class StageManager : MonoBehaviour
 {
     public Stage curStage;
     public List<Stage> stages = new List<Stage>();
-
+    public UIManager uiManager;
+    public int usedBombCount;
     //Player player;
+
+    public float ElapsedTime { get; private set; }
+    public bool IsCleared { get; private set; }
+
+    private void Awake()
+    {
+        IsCleared = false;
+    }
 
     private void Start()
     {
-        SetStages();
-        GameManager.Instance.SaveLoadManager.SaveData(stages);
-        UpdateStageStates();
+        Init();
+        //SetStages();
+        //GameManager.Instance.SaveLoadManager.SaveData(stages);
+        //UpdateStageStates();
+    }
+
+    public void Init()
+    {
+        usedBombCount = 0;
+        ElapsedTime = 0;
+        IsCleared = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        uiManager.gameClearPanel.SetActive(false);
     }
 
     private void Update()
     {
-        CheckClearCondition();
+        if (!IsCleared)
+        {
+            ElapsedTime += Time.deltaTime;
+        }
+    }
+
+    public void ClearStage()
+    {
+        IsCleared = true;
+        Cursor.lockState = CursorLockMode.None;
+        GameManager.Instance.StageManager.uiManager.ShowGameClearPanel();
     }
 
     private void SetStages()
@@ -36,7 +66,7 @@ public class StageManager : MonoBehaviour
 
             if (stageComponent != null)
             {
-                stages.Add(stageComponent);
+                //stages.Add(stageComponent);
             }
             else
             {
@@ -51,39 +81,33 @@ public class StageManager : MonoBehaviour
 
         foreach (var data in loadedList)
         {
-            Stage stage = stages.Find(s => s.Id == data.id);
-            if (stage != null)
-            {
-                stage.LoadFromSaveData(data);
-            }
-            else
-            {
-                Debug.LogWarning($"ID {data.id}에 해당하는 Stage를 찾을 수 없습니다.");
-            }
+            //Stage stage = stages.Find(s => s.Id == data.id);
+            //if (stage != null)
+            //{
+            //    stage.LoadFromSaveData(data);
+            //}
+            // else
+            // {
+            //     Debug.LogWarning($"ID {data.id}에 해당하는 Stage를 찾을 수 없습니다.");
+            // }
         }
     }
 
     public void LoadStage(int stageId)
     {
         // ReStart 버튼으로 스테이지 정보 초기화
-        curStage = stages[stageId];
+        //curStage = stages[stageId];
 
         //player.transform = curStage.PlayerStartPosition;
         // camera.transform = _curStage.CameraStartPosition;
     }
 
-    private void CheckClearCondition()
-    {
-        // 플레이어의 위치 체크
-        // 만약 플레이어의 위치가 curStage.Destination과 일정 거리 사이라면
-        // ClaerStage() 호출
-    }
-
-    private void ClearStage()
+    
+    private void ClearStageLegacy()
     {
         // 현재 스테이지의 State를 Cleared로 바꾸고, 다음 스테이지를 Open한다.
-        stages[curStage.Id].SetState(StageState.Cleared);
-        stages[curStage.Id + 1].SetState(StageState.Open);
+        //stages[curStage.Id].SetState(StageState.Cleared);
+        //stages[curStage.Id + 1].SetState(StageState.Open);
 
         // 다음 스테이지를 로드
         LoadStage(curStage.Id + 1);

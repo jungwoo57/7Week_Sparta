@@ -9,11 +9,16 @@ public class GameClearPanel : MonoBehaviour
     [SerializeField] TextMeshProUGUI clearTimeText;
     [SerializeField] TextMeshProUGUI usedBombText;
 
-    private void Start()
+    StageManager stageManager;
+
+    private void OnEnable()
     {
-        // 테스트
-        SetClearTimeText(1529431);
-        SetBombCountText(6);
+        if (!stageManager)
+        {
+            stageManager = GameManager.Instance.StageManager;
+        }
+        SetClearTimeText(stageManager.ElapsedTime);
+        SetBombCountText(0);
     }
 
     public void SetClearTimeText(float elapsedTime)

@@ -33,7 +33,6 @@ public class Player : MonoBehaviour, IAffected
 
     public void Init()
     {
-        // ������������ ��ź ���� �޾ƿͼ� bomb�� �Ҵ�
         useBombCount = 0;
         maxBombIndex = bomb.Length -1 ;
         curBombIndex = 0;
@@ -41,16 +40,14 @@ public class Player : MonoBehaviour, IAffected
         curBombData = bomb[curBombIndex];
         curBomb = Instantiate(bomb[curBombIndex].bombPrefab, bombPos);
         curBomb.transform.position = bombPos.position;
-        Debug.Log("�ʱ�ȭ �Ϸ�");
     }
     public void SpawnBomb()
     {
-        // ��ź ������ ��Ÿ�� �ҷ��ͼ� ��Ÿ�� �ƴ� �� ��ȯ
         GameObject spawnBomb = Instantiate(bomb[curBombIndex].bombPrefab);
         spawnBomb.transform.position = bombSpawnPos.position;
         spawnBomb.AddComponent<Rigidbody>();
         spawnBomb.AddComponent<BombAction>();
-        useBombCount++;
+        GameManager.Instance.StageManager.usedBombCount++;
         anim.SetTrigger("SpawnBomb");
     }
 

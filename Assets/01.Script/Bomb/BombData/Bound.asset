@@ -17,7 +17,7 @@ MonoBehaviour:
   description: "\uD798\uC744 \uAC00\uD574 \uC774\uB3D9\uC2DC\uD0A8\uB2E4"
   icon: {fileID: 0}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
-  bombPrefab: {fileID: 0}
+  bombPrefab: {fileID: 7100675200466555929, guid: 23b3edf573ae10b40866c142d9b2d453, type: 3}
   explodePower: 0
   explodeRange: 0
   explodeTime: 0

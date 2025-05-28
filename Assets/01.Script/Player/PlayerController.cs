@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     private const float rotateSmoothCoef = 20f;
 
+    StageManager stageManager;
     private void Awake()
     {
         player = GetComponent<Player>();
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
+        stageManager = GameManager.Instance.StageManager;
         //Cursor.lockState = CursorLockMode.Locked;
     }
     private void FixedUpdate()
@@ -74,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        
+        if (stageManager.IsCleared) return;
         mouseDelta = context.ReadValue<Vector2>();
     }
 
