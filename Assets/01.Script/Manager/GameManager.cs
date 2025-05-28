@@ -33,8 +33,6 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
-
-
     public SaveLoadManager SaveLoadManager { get; private set; }
     public StageManager StageManager { get; private set; }
     public PlayerManager PlayerManager { get; private set; }

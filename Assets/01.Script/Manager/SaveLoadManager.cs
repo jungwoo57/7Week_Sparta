@@ -33,7 +33,7 @@ public class SaveLoadManager : MonoBehaviour
 
     private void Start()
     {
-        LoadData();
+        //LoadData();
     }
 
     public void SaveData(List<Stage> stages)
