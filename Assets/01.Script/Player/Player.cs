@@ -41,11 +41,9 @@ public class Player : MonoBehaviour, IAffected
         curBombData = bomb[curBombIndex];
         curBomb = Instantiate(bomb[curBombIndex].bombPrefab, bombPos);
         curBomb.transform.position = bombPos.position;
-        Debug.Log("�ʱ�ȭ �Ϸ�");
     }
     public void SpawnBomb()
     {
-        // ��ź ������ ��Ÿ�� �ҷ��ͼ� ��Ÿ�� �ƴ� �� ��ȯ
         GameObject spawnBomb = Instantiate(bomb[curBombIndex].bombPrefab);
         spawnBomb.transform.position = bombSpawnPos.position;
         spawnBomb.AddComponent<Rigidbody>();
@@ -70,14 +68,12 @@ public class Player : MonoBehaviour, IAffected
         curBombData = bomb[curBombIndex];
         curBomb = Instantiate(bomb[curBombIndex].bombPrefab, bombPos);
         curBomb.transform.position = bombPos.position;
-        Debug.Log("��ź�� �ٲ�����ϴ�" + curBombIndex);
     }
 
     public void OnAffected(Vector3 pos, float force, float radius, BombType type) 
     {
         if(type == BombType.Bound)
         {
-            if (rigid == null) Debug.Log("rigid is null");
             rigid.AddForce(Vector3.up * force, ForceMode.Impulse);
         }
     }
