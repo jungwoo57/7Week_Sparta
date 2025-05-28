@@ -1,34 +1,56 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class SaveData
+[Serializable]
+public struct SaveData
 {
     public int id;
     public StageState stageState;
 }
 
+[Serializable]
+public class SaveDataWrapper
+{
+    public List<SaveData> dataList;
+
+    public SaveDataWrapper(List<SaveData> list)
+    {
+        dataList = list;
+    }
+}
+
 public class SaveLoadManager : MonoBehaviour
 {
     private string path;
-    public List<SaveData> stageDataList = new();
+    public List<SaveData> saveDataList = new();
 
     private void Awake()
     {
-        path = Application.dataPath + "/save";
+        path = Application.persistentDataPath + "/save.json";
     }
 
-    public void SaveData()
+    private void Start()
     {
-        for (int i = 0; i < GameManager.Instance.StageManager.stages.Count; i++)
+        LoadData();
+    }
+
+    public void SaveData(List<Stage> stages)
+    {
+        if (saveDataList != null)
         {
-            stageDataList[i].id = GameManager.Instance.StageManager.stages[i].Id;
-            stageDataList[i].stageState = GameManager.Instance.StageManager.stages[i].StageState;
+            saveDataList.Clear();
+        }
+
+        foreach (Stage stage in stages)
+        {
+            saveDataList.Add(stage.ToSaveData());
         }
 
         try
         {
-            string json = JsonUtility.ToJson(stageDataList);
+            string json = JsonUtility.ToJson(new SaveDataWrapper(saveDataList));
             File.WriteAllText(path, json);
         }
         catch (IOException e)
@@ -39,17 +61,18 @@ public class SaveLoadManager : MonoBehaviour
 
     public List<SaveData> LoadData()
     {
+        if (!File.Exists(path))
+        {
+            Debug.LogWarning("Save file not found.");
+            return new List<SaveData>();
+        }
+
         try
         {
-            if (!File.Exists(path))
-            {
-                Debug.LogWarning("Save file not found.");
-                return new List<SaveData>();
-            }
-
             string json = File.ReadAllText(path);
-            List<SaveData> dataList = JsonUtility.FromJson<List<SaveData>>(json);
-            return dataList;
+            SaveDataWrapper wrapper = JsonUtility.FromJson<SaveDataWrapper>(json);
+            saveDataList = wrapper.dataList;
+            return saveDataList;
         }
         catch (IOException e)
         {

@@ -30,4 +30,14 @@ public class Stage : MonoBehaviour
     {
         StageState = state;
     }
+
+    public SaveData ToSaveData()
+    {
+        return new SaveData { id = _id, stageState = _stageState };
+    }
+
+    public void LoadFromSaveData(SaveData data)
+    {
+        StageState = data.stageState;
+    }
 }
