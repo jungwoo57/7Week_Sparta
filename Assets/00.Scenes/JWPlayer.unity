@@ -2840,6 +2840,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5320190823415354988, guid: 4bcd3a89b327aa94c92c2cd755e600d7, type: 3}
+      propertyPath: bomb.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 205e37374f517764492c55d17c53e5cc, type: 2}
+    - target: {fileID: 5320190823415354988, guid: 4bcd3a89b327aa94c92c2cd755e600d7, type: 3}
+      propertyPath: bomb.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: e0e0ac48f17c8394ea5684a18f34e4b4, type: 2}
     - target: {fileID: 8750150920380749283, guid: 4bcd3a89b327aa94c92c2cd755e600d7, type: 3}
       propertyPath: m_Name
       value: Player
