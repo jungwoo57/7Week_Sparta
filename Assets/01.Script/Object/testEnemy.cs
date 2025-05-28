@@ -6,9 +6,9 @@ using UnityEngine;
 public class testEnemy : MonoBehaviour, IAffected
 {
     bool isCondition = false;
-    public void OnAffected(Vector3 pos, float force, float radius, TestBombType bombType)
+    public void OnAffected(Vector3 pos, float force, float radius, BombType bombType)
     {
-        if (isCondition) return;
+       /* if (isCondition) return;
 
         switch (bombType)
         {
@@ -21,7 +21,7 @@ public class testEnemy : MonoBehaviour, IAffected
             case TestBombType.Flame:
                 StartCoroutine(Burn());
                 break;
-        }
+        }*/
     }
 
     IEnumerator Stunned()

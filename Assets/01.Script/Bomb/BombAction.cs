@@ -16,7 +16,7 @@ public class BombAction : MonoBehaviour
     private void Awake()
     {
         _collider = this.gameObject.GetComponent<Collider>();
-        _collider.transform.localScale = Vector3.zero;
+        //_collider.transform.localScale = Vector3.zero;
     }
 
     private void Start()
@@ -45,6 +45,16 @@ public class BombAction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        IAffected[] reactables = other.GetComponents<IAffected>();
+        
+        foreach (var reactable in reactables)
+        {
+            if (reactable != null)
+            {
+                reactable.OnAffected(transform.position, _status.data.explodePower, _status.data.explodeRange, _status.data.bombType);
+            }
+        }
+        /*
         if (_data.bombType == BombType.Bound)
         {
             Bound(other);
@@ -61,6 +71,7 @@ public class BombAction : MonoBehaviour
         {
             StartCoroutine(Freeze(other));
         }
+        */
     }
 
     private void Bound(Collider target)
@@ -85,7 +96,7 @@ public class BombAction : MonoBehaviour
         else if (target.CompareTag("Destroyable"))
         {
             target.gameObject.SetActive(false);
-        }
+        }  
     }
 
     private void Laser(Collider target)

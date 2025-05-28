@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class Affected : MonoBehaviour, IAffected
 {
-    public void OnAffected(Vector3 pos, float force, float radius, TestBombType type)
+    public void OnAffected(Vector3 pos, float force, float radius, BombType type)
     {
-        if(type != TestBombType.Basic) return;
+        /*if(type != TestBombType.Basic) return;
         
         Rigidbody rigid = GetComponent<Rigidbody>();
         rigid?.AddExplosionForce(force, pos, radius);
+        */
     }
 }
