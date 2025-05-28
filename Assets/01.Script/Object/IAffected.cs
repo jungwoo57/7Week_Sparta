@@ -1,5 +1,3 @@
-
-using _01.Script.Object;
 using UnityEngine;
 
 public interface IAffected

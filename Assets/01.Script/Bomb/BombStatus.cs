@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BombStatus : MonoBehaviour
 {
-    public BombData data;
+    public BombBase data;
     private BombAction _action;
 
     private void Awake()

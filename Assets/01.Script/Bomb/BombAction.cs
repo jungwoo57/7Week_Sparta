@@ -1,8 +1,5 @@
-using System;
+
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using TMPro;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -10,18 +7,26 @@ public class BombAction : MonoBehaviour
 {
     private Collider _collider;
     private BombStatus _status;
-    protected BombData _data;
+    protected BombBase _data;
+    //ScriptableObject에서 불러올 것들
+    [SerializeField] private float radius;
+    [SerializeField] private float force;
+    [SerializeField] private BombType bombType;
     
-
-    private void Awake()
+    public void Explode()
     {
-        _collider = this.gameObject.GetComponent<Collider>();
-        //_collider.transform.localScale = Vector3.zero;
-    }
+        //Init();
+        Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
 
-    private void Start()
-    {
-        StartCoroutine(Explode());
+        foreach (Collider hit in colliders)
+        {
+            IAffected[] reactables = hit.GetComponents<IAffected>();
+
+            foreach (var reactable in reactables)
+            {
+                reactable.OnAffected(transform.position, force, radius, bombType);
+            }
+        }
     }
 
     private void Init()
@@ -29,118 +34,10 @@ public class BombAction : MonoBehaviour
         _status = this.gameObject.GetComponent<BombStatus>();
         _data = _status.data;
     }
-
-    public IEnumerator Explode()
+    
+    void OnDrawGizmos()
     {
-        Init();
-        yield return new WaitForSeconds(_data.explodeTime);
-        float time = 0f;
-        while (time < 1f)
-        {
-            _collider.transform.localScale = Vector3.Lerp(Vector3.one * _data.explodeRange, Vector3.zero, time);
-            time += Time.deltaTime;
-            yield return null;
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        IAffected[] reactables = other.GetComponents<IAffected>();
-        
-        foreach (var reactable in reactables)
-        {
-            if (reactable != null)
-            {
-                reactable.OnAffected(transform.position, _status.data.explodePower, _status.data.explodeRange, _status.data.bombType);
-            }
-        }
-        /*
-        if (_data.bombType == BombType.Bound)
-        {
-            Bound(other);
-        }
-        else if (_data.bombType == BombType.Demolition)
-        {
-            Demolition(other);
-        }
-        else if (_data.bombType == BombType.Laser)
-        {
-            Laser(other);
-        }
-        else if (_data.bombType == BombType.Freeze)
-        {
-            StartCoroutine(Freeze(other));
-        }
-        */
-    }
-
-    private void Bound(Collider target)
-    {
-        if (target == null)
-        {
-            Debug.Log("Target is null");
-        }
-        else if (target.CompareTag("Player"))
-        {
-            var rigid = target.GetComponent<Rigidbody>();
-            rigid.AddForce(Vector3.up * _data.explodePower, ForceMode.Impulse);
-        }
-    }
-
-    private void Demolition(Collider target)
-    {
-        if (target == null)
-        {
-            Debug.Log("Target is null");
-        }
-        else if (target.CompareTag("Destroyable"))
-        {
-            target.gameObject.SetActive(false);
-        }  
-    }
-
-    private void Laser(Collider target)
-    {
-        if (target == null)
-        {
-            Debug.Log("Target is null");
-        }
-        // else if (target.CompareTag("Interactable"))
-        // {
-        //     //대강 요런 느낌..?
-        //     //IInteractable interactable = target.GetComponent<IInteractable>();
-        //     // if (interactable != null)
-        //     // {
-        //     //     interactable.Interact();
-        //     // }
-        // }
-    }
-
-    private IEnumerator Freeze(Collider target)
-    {
-        if (target == null)
-        {
-            Debug.Log("Target is null");
-        }
-        else if (target.CompareTag("Enemy"))
-        {
-            var rigid = target.GetComponent<Rigidbody>();
-            var anim = target.GetComponent<Animator>();
-            var enemySpeed = rigid.velocity;
-            
-            rigid.velocity = Vector3.zero;
-            anim.speed = 0f;
-            
-            yield return new WaitForSeconds(_data.freezeDuration);
-            
-            float time = 0f;
-            while (time < 1f)
-            {
-                rigid.velocity = Vector3.Lerp(Vector3.zero, enemySpeed, time);
-                anim.speed = Mathf.Lerp(0f, 1f, time);
-                time += Time.deltaTime;
-                yield return null;
-            }
-        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, radius);
     }
 }

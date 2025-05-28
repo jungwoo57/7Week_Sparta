@@ -1,51 +1,59 @@
 using System.Collections;
 using System.Collections.Generic;
-using _01.Script.Object;
 using UnityEngine;
 
 public class testEnemy : MonoBehaviour, IAffected
 {
     bool isCondition = false;
+    BombBase _data;
     public void OnAffected(Vector3 pos, float force, float radius, BombType bombType)
     {
-       /* if (isCondition) return;
+        if (isCondition) return;
 
         switch (bombType)
         {
-            case TestBombType.Emp:
-                StartCoroutine(Stunned());
+            case BombType.Laser:
+                StartCoroutine(Laser());
                 break;
-            case TestBombType.Ice:
+            case BombType.Freeze:
                 StartCoroutine(Freeze());
                 break;
-            case TestBombType.Flame:
-                StartCoroutine(Burn());
-                break;
-        }*/
+        }
     }
 
-    IEnumerator Stunned()
+    private IEnumerator Laser()
     {
-        isCondition = true;
-        Debug.Log("EMP 작동");
-        yield return new WaitForSeconds(5f);
-        Debug.Log("EMP 해제");
-        isCondition = false;
+        // else if (target.CompareTag("Interactable"))
+        // {
+        //     //대강 요런 느낌..?
+        //     //IInteractable interactable = target.GetComponent<IInteractable>();
+        //     // if (interactable != null)
+        //     // {
+        //     //     interactable.Interact();
+        //     // }
+        // }
+        yield return null;
     }
-    IEnumerator Freeze()
+
+    private IEnumerator Freeze()
     {
-        isCondition = true;
-        Debug.Log("얼어붙음");
-        yield return new WaitForSeconds(5f);
-        Debug.Log("녹음");
-        isCondition = false;
-    }
-    IEnumerator Burn()
-    {
-        isCondition = true;
-        Debug.Log("불탐");
-        yield return new WaitForSeconds(5f);
-        Debug.Log("꺼짐");
-        isCondition = false;
+        Rigidbody rigid = GetComponent<Rigidbody>();
+        Animator anim = GetComponent<Animator>();
+        var enemySpeed = rigid.velocity;
+
+        rigid.velocity = Vector3.zero;
+        anim.speed = 0f;
+
+        yield return new WaitForSeconds(_data.freezeDuration);
+
+        float time = 0f;
+        while (time < 1f)
+        {
+            rigid.velocity = Vector3.Lerp(Vector3.zero, enemySpeed, time);
+            anim.speed = Mathf.Lerp(0f, 1f, time);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
     }
 }

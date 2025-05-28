@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using _01.Script.Object;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IAffected
@@ -10,13 +9,13 @@ public class Player : MonoBehaviour, IAffected
 
     public Transform bombPos; // �÷��̾ ��ź ����ִ� ��ġ
     public Transform bombSpawnPos; // ��ź ��ȯ ��ġ
-    public BombData[] bomb; // ������������ �ʿ��� ��ź ���� �޾ƿ�
+    public BombBase[] bomb; // ������������ �ʿ��� ��ź ���� �޾ƿ�
 
     private int curBombIndex; // ���� ��� �ִ� ��ź��ȣ
     private int maxBombIndex; // ����� ��ź ���� �� �ְ�ġ ����
     public int useBombCount; // ����� ��ź �� ��
     public GameObject curBomb; //���� ��� �ִ� ��ź
-    public BombData curBombData;
+    public BombBase curBombData;
 
     private Animator anim;
     private Rigidbody rigid;
