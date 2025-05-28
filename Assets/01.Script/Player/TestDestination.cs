@@ -6,14 +6,15 @@ public class TestDestination : MonoBehaviour
 {
     void OnDestination()
     {
-        Debug.Log("¸ñÇ¥ µµÂø");
+        GameManager.Instance.StageManager.ClearStage();
+        Debug.Log("ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½");
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            OnDestination(); // °ÔÀÓ Á¾·á UI Ãâ·Â
+            OnDestination(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½
         }
     }
 }

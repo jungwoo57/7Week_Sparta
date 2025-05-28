@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
     //     }
     // }
 
-    public GameObject gameClearPanel;
+    public GameClearPanel gameClearPanel;
 
     private void Start()
     {
@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowGameClearPanel()
     {
-        gameClearPanel.SetActive(true);
+        gameClearPanel.gameObject.SetActive(true);
     }
 
     #region UISharedMethods
