@@ -33,7 +33,6 @@ public class Player : MonoBehaviour, IAffected
 
     public void Init()
     {
-        // ������������ ��ź ���� �޾ƿͼ� bomb�� �Ҵ�
         useBombCount = 0;
         maxBombIndex = bomb.Length -1 ;
         curBombIndex = 0;
