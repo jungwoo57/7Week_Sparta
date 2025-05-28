@@ -1,16 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using _01.Script.Bomb.BombData;
-using _01.Script.Object;
 using UnityEngine;
 
-public class Affected : MonoBehaviour, IAffected
+public class PBound : MonoBehaviour, IAffected
 {
     public void OnAffected(Vector3 pos, float force, float radius, BombType type)
     {
-        if(type != BombType.Bound) return;
-        
+        if (type != BombType.Bound) return;
+
         Rigidbody rigid = GetComponent<Rigidbody>();
-        rigid?.AddExplosionForce(force, pos, radius);
+        rigid.AddForce(Vector3.up *  force, ForceMode.Impulse);
     }
 }

@@ -1,3 +1,4 @@
+using _01.Script.Bomb.BombData;
 using UnityEngine;
 
 namespace _01.Script.Object
@@ -19,7 +20,7 @@ namespace _01.Script.Object
 
                 foreach (var reactable in reactables)
                 {
-                    reactable.OnAffected(transform.position, force, radius, bombType);
+                   //reactable.OnAffected(transform.position, force, radius, bombType);
                 }
             }
         }

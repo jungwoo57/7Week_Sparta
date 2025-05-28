@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a47d94253ea054489d47338fee62dcb, type: 3}
+  m_Name: Laser
+  m_EditorClassIdentifier: 
+  bombType: 4
+  bombName: "\uB808\uC774\uC800 \uD3ED\uD0C4"
+  description: "\uB808\uC774\uC800"
+  icon: {fileID: 0}
+  iconColor: {r: 0, g: 0, b: 0, a: 0}
+  bombPrefab: {fileID: 0}
+  explodePower: 0
+  explodeRange: 0
+  explodeTime: 0
+  bombCooldown: 0
+  freezeDuration: 0
+  stackable: 0
+  maxStackAmount: 0
+  equipPrefab: {fileID: 0}

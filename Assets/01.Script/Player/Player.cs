@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _01.Script.Bomb.BombData;
 using _01.Script.Object;
 using UnityEngine;
 
