@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float maxCameraAngle;
     public float minCameraAngle;
     public float curCameraAngle;
+    private Vector3 destAngle;
     private Vector2 mouseDelta;
     public Transform cameraContainer;
     public LayerMask groundLayer;
@@ -20,10 +21,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rigid;
     private Player player;
 
+    private const float rotateSmoothCoef = 0.1f;
+
     private void Awake()
     {
         player = GetComponent<Player>();
         rigid = GetComponent<Rigidbody>();
+        destAngle = cameraContainer.transform.eulerAngles;
     }
     private void Start()
     {
@@ -75,11 +79,19 @@ public class PlayerController : MonoBehaviour
 
     private void Look()
     {
-        curCameraAngle += mouseDelta.y * cameraSensitive;
-        curCameraAngle = Mathf.Clamp(curCameraAngle, minCameraAngle, maxCameraAngle);
-        cameraContainer.localEulerAngles = new Vector3(-curCameraAngle, 0, 0);
+        Vector3 cameraAngle = cameraContainer.localEulerAngles;
+        Vector3 transformAngle = transform.eulerAngles;
+        
+        destAngle.x -= mouseDelta.y * cameraSensitive;
+        destAngle.x = Mathf.Clamp(destAngle.x, -90f, 90f);
+        cameraAngle.x = Mathf.LerpAngle(cameraAngle.x, destAngle.x, rotateSmoothCoef);
 
-        transform.eulerAngles += new Vector3(0, mouseDelta.x * cameraSensitive, 0);
+         destAngle.y += mouseDelta.x * cameraSensitive;
+         destAngle.y = AngleCalculator.NormalizeAngle360(destAngle.y);
+         transformAngle.y = Mathf.LerpAngle(transformAngle.y, destAngle.y, rotateSmoothCoef);
+        
+        cameraContainer.localEulerAngles = cameraAngle;
+        transform.eulerAngles = transformAngle;
         
     }
     private bool IsGround()
