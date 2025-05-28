@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rigid;
     private Player player;
 
-    private const float rotateSmoothCoef = 0.1f;
+    private const float rotateSmoothCoef = 20f;
 
     private void Awake()
     {
@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
     private void FixedUpdate()
     {
@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnLook(InputAction.CallbackContext context)
     {
+        
         mouseDelta = context.ReadValue<Vector2>();
     }
 
@@ -84,11 +85,11 @@ public class PlayerController : MonoBehaviour
         
         destAngle.x -= mouseDelta.y * cameraSensitive;
         destAngle.x = Mathf.Clamp(destAngle.x, -90f, 90f);
-        cameraAngle.x = Mathf.LerpAngle(cameraAngle.x, destAngle.x, rotateSmoothCoef);
+        cameraAngle.x = Mathf.LerpAngle(cameraAngle.x, destAngle.x, rotateSmoothCoef * Time.deltaTime);
 
          destAngle.y += mouseDelta.x * cameraSensitive;
          destAngle.y = AngleCalculator.NormalizeAngle360(destAngle.y);
-         transformAngle.y = Mathf.LerpAngle(transformAngle.y, destAngle.y, rotateSmoothCoef);
+         transformAngle.y = Mathf.LerpAngle(transformAngle.y, destAngle.y, rotateSmoothCoef * Time.deltaTime);
         
         cameraContainer.localEulerAngles = cameraAngle;
         transform.eulerAngles = transformAngle;
