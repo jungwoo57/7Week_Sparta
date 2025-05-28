@@ -27,14 +27,18 @@ public class StageSelectPanel : MonoBehaviour
     private int currentPage;
     private const int maxStageCountPerPage = 12;
 
-    private Progress progress;
+    // private Progress progress;
 
+    StageManager stageManager;
+    SaveLoadManager saveLoadManager;
     public void Start()
     {
         ClearContentBox();
         // progress = SaveLoadManager.Instance.progress;
-        InitProgressForTest();
-        allStageCount = progress.stages.Count;
+        //InitProgressForTest();
+        stageManager = GameManager.Instance.StageManager;
+        saveLoadManager = GameManager.Instance.SaveLoadManager;
+        allStageCount = GameManager.AllStageCount;
         pageCount = allStageCount / maxStageCountPerPage + 1;
 
         ShowTargetPage(1);
@@ -48,20 +52,20 @@ public class StageSelectPanel : MonoBehaviour
         }
     }
 
-    private void InitProgressForTest()
-    {
-        progress = new Progress
-        {
-            stages = new List<StageInfo>()
-        };
-        for (int i = 0; i < 15; i++)
-        {
-            StageInfo stage = new StageInfo();
-            stage.id = i;
-            stage.state = i == 0 ? StageState.Open : StageState.Locked;
-            progress.stages.Add(stage);
-        }
-    }
+    // private void InitProgressForTest()
+    // {
+    //     progress = new Progress
+    //     {
+    //         stages = new List<StageInfo>()
+    //     };
+    //     for (int i = 0; i < 15; i++)
+    //     {
+    //         StageInfo stage = new StageInfo();
+    //         stage.id = i;
+    //         stage.state = i == 0 ? StageState.Open : StageState.Locked;
+    //         progress.stages.Add(stage);
+    //     }
+    // }
 
     private void ShowTargetPage(int pageNumber)
     {
@@ -83,10 +87,11 @@ public class StageSelectPanel : MonoBehaviour
         int startIndex = (pageNumber - 1) * 12;
         for (int i = startIndex; i < startIndex + requiredButtonCount; i++)
         {
-            StageInfo stage = progress.stages[i];
+            Stage stage = stageManager.stages[i];
+            SaveData saveData = saveLoadManager.saveDataList[i];
             StageSelectButton button = Instantiate(stageSelectButtonPrefab, contentBox.transform)
                 .GetComponent<StageSelectButton>();
-            button.Init(stage);
+            button.Init(saveData);
 
             //button.Init(i);
             // 렌더링 리프레시 (안 열린 스테이지 찰나 활성화된 상태로 보이는 것  방지)

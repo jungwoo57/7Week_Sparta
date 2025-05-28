@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public const int AllStageCount = 15;
+
     private void Singleton()
     {
         if (_instance == null)
