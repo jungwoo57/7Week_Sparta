@@ -18,9 +18,9 @@ MonoBehaviour:
   icon: {fileID: 0}
   iconColor: {r: 1, g: 1, b: 1, a: 1}
   bombPrefab: {fileID: 7100675200466555929, guid: 23b3edf573ae10b40866c142d9b2d453, type: 3}
-  explodePower: 0
-  explodeRange: 0
-  explodeTime: 0
+  explodePower: 10
+  explodeRange: 5
+  explodeTime: 2
   bombCooldown: 0
   freezeDuration: 0
   stackable: 0
