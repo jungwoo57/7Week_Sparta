@@ -26,6 +26,7 @@ public class Stage : MonoBehaviour
     [SerializeField] private Vector3 destination;
     public Vector3 Destination => destination;
 
+    public void SetIdForProto(int id) => _id = id;
     public void SetState(StageState state)
     {
         StageState = state;

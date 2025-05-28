@@ -16,23 +16,32 @@ public class StageManager : MonoBehaviour
     private void Awake()
     {
         IsCleared = false;
+        SetStageProto();
+    }
+
+    private void SetStageProto()
+    {
+        for (int i = 0; i < GameManager.AllStageCount; i++)
+        {
+            Stage stage = new();
+            stage.SetIdForProto(i);
+            stages.Add(stage);
+        }
     }
 
     private void Start()
     {
-        Init();
         //SetStages();
         //GameManager.Instance.SaveLoadManager.SaveData(stages);
         //UpdateStageStates();
     }
 
-    public void Init()
+    public void InitStage()
     {
         usedBombCount = 0;
         ElapsedTime = 0;
         IsCleared = false;
         Cursor.lockState = CursorLockMode.Locked;
-        uiManager.gameClearPanel.gameObject.SetActive(false);
     }
 
     private void Update()
