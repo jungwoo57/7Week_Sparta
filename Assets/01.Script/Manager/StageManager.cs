@@ -20,7 +20,7 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
-        Init();
+        //Init();
         //SetStages();
         //GameManager.Instance.SaveLoadManager.SaveData(stages);
         //UpdateStageStates();
@@ -32,7 +32,6 @@ public class StageManager : MonoBehaviour
         ElapsedTime = 0;
         IsCleared = false;
         Cursor.lockState = CursorLockMode.Locked;
-        uiManager.gameClearPanel.gameObject.SetActive(false);
     }
 
     private void Update()

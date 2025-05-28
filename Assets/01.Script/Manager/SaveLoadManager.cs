@@ -34,6 +34,12 @@ public class SaveLoadManager : MonoBehaviour
     private void Start()
     {
         //LoadData();
+        LoadStageList();
+    }
+
+    private void LoadStageList()
+    {
+        
     }
 
     public void SaveData(List<Stage> stages)

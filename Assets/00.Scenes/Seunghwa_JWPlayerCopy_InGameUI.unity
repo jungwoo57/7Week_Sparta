@@ -848,7 +848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bd10086026ecdd4d8fcf03fe11a9a86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameClearPanel: {fileID: 357499201}
+  gameClearPanel: {fileID: 357499203}
 --- !u!4 &244618358
 Transform:
   m_ObjectHideFlags: 0
