@@ -10,10 +10,9 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
-
         SetStages();
-        //UpdateStageStates();
-        GameManager.Instance.SaveLoadManager.SaveData();
+        GameManager.Instance.SaveLoadManager.SaveData(stages);
+        UpdateStageStates();
     }
 
     private void Update()
@@ -48,9 +47,19 @@ public class StageManager : MonoBehaviour
 
     public void UpdateStageStates()
     {
-        for (int i = 0; i < stages.Count; i++)
+        var loadedList = GameManager.Instance.SaveLoadManager.saveDataList;
+
+        foreach (var data in loadedList)
         {
-            stages[i].StageState = GameManager.Instance.SaveLoadManager.stageDataList[i].stageState;
+            Stage stage = stages.Find(s => s.Id == data.id);
+            if (stage != null)
+            {
+                stage.LoadFromSaveData(data);
+            }
+            else
+            {
+                Debug.LogWarning($"ID {data.id}에 해당하는 Stage를 찾을 수 없습니다.");
+            }
         }
     }
 

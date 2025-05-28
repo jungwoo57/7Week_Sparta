@@ -19,7 +19,7 @@ namespace _01.Script.Object
 
                 foreach (var reactable in reactables)
                 {
-                    reactable.OnAffected(transform.position, force, radius, bombType);
+                    //reactable.OnAffected(transform.position, force, radius, bombType);
                 }
             }
         }

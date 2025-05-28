@@ -10,6 +10,10 @@ public enum BombType
     Portal,
     Freeze,
     Laser,
+    Emp,
+    Ice,
+    Flame,
+    Basic
 }
 
 [CreateAssetMenu(menuName = "NewBomb", fileName = "Bomb")]
