@@ -23,6 +23,7 @@ public class Player : MonoBehaviour, IAffected
     {
         controller = GetComponent<PlayerController>();
         anim = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -74,6 +75,10 @@ public class Player : MonoBehaviour, IAffected
 
     public void OnAffected(Vector3 pos, float force, float radius, BombType type) 
     {
-        rigid?.AddExplosionForce(force, pos, radius);
+        if(type == BombType.Bound)
+        {
+            if (rigid == null) Debug.Log("rigid is null");
+            rigid.AddForce(Vector3.up * force, ForceMode.Impulse);
+        }
     }
 }
