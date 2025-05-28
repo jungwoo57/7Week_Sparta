@@ -1,6 +1,5 @@
 
 using System.Collections;
-using _01.Script.Bomb.BombData;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 

@@ -1,13 +1,13 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace _01.Script.Bomb.BombData
+public enum BombType
 {
-    public enum BombType
-    {
-        Bound,
-        Demolition,
-        Portal,
-        Freeze,
-        Laser,
-    }
+    Bound,
+    Demolition,
+    Portal,
+    Freeze,
+    Laser,
 }
-

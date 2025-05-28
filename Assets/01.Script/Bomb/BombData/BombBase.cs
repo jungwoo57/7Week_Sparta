@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using _01.Script.Bomb.BombData;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "NewBomb", fileName = "Bomb")]

@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using _01.Script.Bomb.BombData;
-using _01.Script.Object;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IAffected
@@ -11,14 +9,16 @@ public class Player : MonoBehaviour, IAffected
 
     public Transform bombPos; // �÷��̾ ��ź ����ִ� ��ġ
     public Transform bombSpawnPos; // ��ź ��ȯ ��ġ
-    public GameObject[] bomb; // ������������ �ʿ��� ��ź ���� �޾ƿ�
+    public BombBase[] bomb; // ������������ �ʿ��� ��ź ���� �޾ƿ�
 
     private int curBombIndex; // ���� ��� �ִ� ��ź��ȣ
     private int maxBombIndex; // ����� ��ź ���� �� �ְ�ġ ����
     public int useBombCount; // ����� ��ź �� ��
     public GameObject curBomb; //���� ��� �ִ� ��ź
+    public BombBase curBombData;
 
     private Animator anim;
+    private Rigidbody rigid;
     private void Awake()
     {
         controller = GetComponent<PlayerController>();
@@ -36,16 +36,19 @@ public class Player : MonoBehaviour, IAffected
         useBombCount = 0;
         maxBombIndex = bomb.Length -1 ;
         curBombIndex = 0;
-        curBomb = Instantiate(bomb[curBombIndex], bombPos);
+
+        curBombData = bomb[curBombIndex];
+        curBomb = Instantiate(bomb[curBombIndex].bombPrefab, bombPos);
         curBomb.transform.position = bombPos.position;
         Debug.Log("�ʱ�ȭ �Ϸ�");
     }
     public void SpawnBomb()
     {
         // ��ź ������ ��Ÿ�� �ҷ��ͼ� ��Ÿ�� �ƴ� �� ��ȯ
-        GameObject spawnBomb = Instantiate(bomb[curBombIndex]);
+        GameObject spawnBomb = Instantiate(bomb[curBombIndex].bombPrefab);
         spawnBomb.transform.position = bombSpawnPos.position;
         spawnBomb.AddComponent<Rigidbody>();
+        spawnBomb.AddComponent<BombAction>();
         useBombCount++;
         anim.SetTrigger("SpawnBomb");
     }
@@ -63,10 +66,14 @@ public class Player : MonoBehaviour, IAffected
         {
             Destroy(curBomb);
         }
-        curBomb = Instantiate(bomb[curBombIndex], bombPos);
+        curBombData = bomb[curBombIndex];
+        curBomb = Instantiate(bomb[curBombIndex].bombPrefab, bombPos);
         curBomb.transform.position = bombPos.position;
         Debug.Log("��ź�� �ٲ�����ϴ�" + curBombIndex);
     }
 
-    public void OnAffected(Vector3 pos, float force, float radius, BombType type) { }
+    public void OnAffected(Vector3 pos, float force, float radius, BombType type) 
+    {
+        rigid?.AddExplosionForce(force, pos, radius);
+    }
 }

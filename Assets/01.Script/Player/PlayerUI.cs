@@ -22,6 +22,6 @@ public class PlayerUI : MonoBehaviour
     private void UIUpdate()
     {
         bombCount.text = " X " + player.useBombCount.ToString();
-        bombName.text = player.curBomb.gameObject.name; // bombdata.name 으로 변경예정
+        bombName.text = player.curBombData.bombName; // bombdata.name 으로 변경예정
     }
 }

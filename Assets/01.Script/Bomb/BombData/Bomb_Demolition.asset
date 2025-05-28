@@ -13,16 +13,17 @@ MonoBehaviour:
   m_Name: Bomb_Demolition
   m_EditorClassIdentifier: 
   bombType: 1
-  bombName: 
+  bombName: BurstBomb
   description: 
   icon: {fileID: 0}
   iconColor: {r: 0, g: 0, b: 0, a: 0}
-  bombPrefab: {fileID: 0}
+  bombPrefab: {fileID: 3578195903471749245, guid: 5cd1e44ecb0bab94d8fa64e9ca572c84, type: 3}
   explodePower: 0
   explodeRange: 0
   explodeTime: 0
   bombCooldown: 0
+  freezeDuration: 0
   stackable: 0
   maxStackAmount: 0
-  equipPrefab: {fileID: 0}
+  equipPrefab: {fileID: 3578195903471749245, guid: 5cd1e44ecb0bab94d8fa64e9ca572c84, type: 3}
   explodeSound: {fileID: 0}

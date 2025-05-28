@@ -1,6 +1,3 @@
-
-using _01.Script.Bomb.BombData;
-using _01.Script.Object;
 using UnityEngine;
 
 public interface IAffected

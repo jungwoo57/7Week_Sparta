@@ -117,7 +117,7 @@ Transform:
   m_GameObject: {fileID: 2348146671912496022}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.558, z: 1.901}
+  m_LocalPosition: {x: 0, y: 1.2, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 4796231700022490349}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.76, y: 1, z: 0.166}
+  m_LocalPosition: {x: 1, y: 1.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -282,8 +282,8 @@ GameObject:
   - component: {fileID: 8559911708444668743}
   - component: {fileID: 865908358444823997}
   - component: {fileID: 5772640464990670756}
-  - component: {fileID: 2693927859528044753}
   - component: {fileID: 5320190823415354988}
+  - component: {fileID: 491407497916583901}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -544,19 +544,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
---- !u!114 &2693927859528044753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8750150920380749283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e13a4cf8002f12e42817e2f1be0af311, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bombCount: 0
 --- !u!114 &5320190823415354988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,10 +556,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6aafd372372f184b86a63d52ec74c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  condition: {fileID: 0}
   controller: {fileID: 0}
   bombPos: {fileID: 3143123897436403576}
   bombSpawnPos: {fileID: 6659029150165546105}
   bomb:
-  - {fileID: 7100675200466555929, guid: 23b3edf573ae10b40866c142d9b2d453, type: 3}
-  - {fileID: 3578195903471749245, guid: 5cd1e44ecb0bab94d8fa64e9ca572c84, type: 3}
+  - {fileID: 11400000, guid: 22a18c07501c3d94ab7780c619c10e77, type: 2}
+  - {fileID: 11400000, guid: 0b468acda5970ac4b9d2ae08a70074d5, type: 2}
+  useBombCount: 0
+  curBomb: {fileID: 0}
+  curBombData: {fileID: 0}
+--- !u!95 &491407497916583901
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8750150920380749283}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f810007045f080c41994f19d477ca4a8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

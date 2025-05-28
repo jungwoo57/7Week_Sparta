@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using _01.Script.Bomb.BombData;
-using _01.Script.Object;
 using UnityEngine;
 
 public class Destructible : MonoBehaviour, IAffected
@@ -27,6 +25,6 @@ public class Destructible : MonoBehaviour, IAffected
     }
     private void Demolition()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }
