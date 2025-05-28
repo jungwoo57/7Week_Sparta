@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a47d94253ea054489d47338fee62dcb, type: 3}
   m_Name: Demolition
   m_EditorClassIdentifier: 
-  bombType: 0
+  bombType: 1
   bombName: "\uCDA9\uACA9 \uD3ED\uD0C4"
   description: "\uBB3C\uCCB4\uB97C \uD30C\uAD34 \uD560 \uC218 \uC788\uB2E4"
   icon: {fileID: 0}
   iconColor: {r: 0, g: 0, b: 0, a: 0}
-  bombPrefab: {fileID: 0}
-  explodePower: 0
-  explodeRange: 0
-  explodeTime: 0
+  bombPrefab: {fileID: 3578195903471749245, guid: 5cd1e44ecb0bab94d8fa64e9ca572c84, type: 3}
+  explodePower: 2
+  explodeRange: 5
+  explodeTime: 2
   bombCooldown: 0
   freezeDuration: 0
   stackable: 0

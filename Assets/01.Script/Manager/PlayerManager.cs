@@ -1,14 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    void Start()
+    public Player _player;
+    public Player Player
     {
-        
-    }
-
-    void Update()
-    {
-        
+        get { return _player; }
+        set { _player = value; }
     }
 }

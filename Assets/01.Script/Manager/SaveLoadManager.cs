@@ -33,7 +33,16 @@ public class SaveLoadManager : MonoBehaviour
 
     private void Start()
     {
+        DeleteData();
         LoadData();
+    }
+
+    private void DeleteData()
+    {
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
     }
 
     public void SaveData(List<Stage> stages)
@@ -59,12 +68,22 @@ public class SaveLoadManager : MonoBehaviour
         }
     }
 
-    public List<SaveData> LoadData()
+    public void LoadData()
     {
         if (!File.Exists(path))
         {
             Debug.LogWarning("Save file not found.");
-            return new List<SaveData>();
+            List<SaveData> saveData = new();
+            for (int i = 0; i < GameManager.AllStageCount; i++)
+            {
+                SaveData data = new();
+                data.stageState = (i == 0) ? StageState.Open : StageState.Locked;
+                data.id = i;
+                saveData.Add(data);
+            }
+            string json = JsonUtility.ToJson(new SaveDataWrapper(saveData));
+            File.WriteAllText(path, json);
+            //return new List<SaveData>();
         }
 
         try
@@ -72,12 +91,12 @@ public class SaveLoadManager : MonoBehaviour
             string json = File.ReadAllText(path);
             SaveDataWrapper wrapper = JsonUtility.FromJson<SaveDataWrapper>(json);
             saveDataList = wrapper.dataList;
-            return saveDataList;
+            //return saveDataList;
         }
         catch (IOException e)
         {
             Debug.LogError($"Load Failed: {e.Message}");
-            return new List<SaveData>();
+            //return new List<SaveData>();
         }
     }
 }

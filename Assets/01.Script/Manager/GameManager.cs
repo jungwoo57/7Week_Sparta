@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public const int AllStageCount = 15;
+
     private void Singleton()
     {
         if (_instance == null)
@@ -33,8 +35,6 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
-
-
     public SaveLoadManager SaveLoadManager { get; private set; }
     public StageManager StageManager { get; private set; }
     public PlayerManager PlayerManager { get; private set; }

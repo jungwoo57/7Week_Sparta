@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,15 +7,16 @@ public class Player : MonoBehaviour, IAffected
     public PlayerController controller;
 
 
-    public Transform bombPos; // �÷��̾ ��ź ����ִ� ��ġ
-    public Transform bombSpawnPos; // ��ź ��ȯ ��ġ
-    public BombBase[] bomb; // ������������ �ʿ��� ��ź ���� �޾ƿ�
+    public Transform bombPos;
+    public Transform bombSpawnPos;
+    public BombBase[] bomb; 
 
-    private int curBombIndex; // ���� ��� �ִ� ��ź��ȣ
-    private int maxBombIndex; // ����� ��ź ���� �� �ְ�ġ ����
-    public int useBombCount; // ����� ��ź �� ��
-    public GameObject curBomb; //���� ��� �ִ� ��ź
+    private int curBombIndex; 
+    private int maxBombIndex;
+    public int useBombCount; 
+    public GameObject curBomb;
     public BombBase curBombData;
+    public PlayerManager playerManager;
 
     private Animator anim;
     private Rigidbody rigid;
@@ -33,7 +34,12 @@ public class Player : MonoBehaviour, IAffected
 
     public void Init()
     {
-        // ������������ ��ź ���� �޾ƿͼ� bomb�� �Ҵ�
+        playerManager = FindObjectOfType<PlayerManager>();
+        if(playerManager != null)
+        {
+            playerManager.Player = this;
+        }
+
         useBombCount = 0;
         maxBombIndex = bomb.Length -1 ;
         curBombIndex = 0;
@@ -41,16 +47,14 @@ public class Player : MonoBehaviour, IAffected
         curBombData = bomb[curBombIndex];
         curBomb = Instantiate(bomb[curBombIndex].bombPrefab, bombPos);
         curBomb.transform.position = bombPos.position;
-        Debug.Log("�ʱ�ȭ �Ϸ�");
     }
     public void SpawnBomb()
     {
-        // ��ź ������ ��Ÿ�� �ҷ��ͼ� ��Ÿ�� �ƴ� �� ��ȯ
         GameObject spawnBomb = Instantiate(bomb[curBombIndex].bombPrefab);
         spawnBomb.transform.position = bombSpawnPos.position;
         spawnBomb.AddComponent<Rigidbody>();
         spawnBomb.AddComponent<BombAction>();
-        useBombCount++;
+        GameManager.Instance.StageManager.usedBombCount++;
         anim.SetTrigger("SpawnBomb");
     }
 
@@ -70,14 +74,12 @@ public class Player : MonoBehaviour, IAffected
         curBombData = bomb[curBombIndex];
         curBomb = Instantiate(bomb[curBombIndex].bombPrefab, bombPos);
         curBomb.transform.position = bombPos.position;
-        Debug.Log("��ź�� �ٲ�����ϴ�" + curBombIndex);
     }
 
     public void OnAffected(Vector3 pos, float force, float radius, BombType type) 
     {
         if(type == BombType.Bound)
         {
-            if (rigid == null) Debug.Log("rigid is null");
             rigid.AddForce(Vector3.up * force, ForceMode.Impulse);
         }
     }

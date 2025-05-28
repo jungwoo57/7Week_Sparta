@@ -1,18 +1,15 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public enum StageState
-{
-    Locked,
-    Open,
-    Cleared
-}
-
-public class Stage : MonoBehaviour
+public class TestStage : MonoBehaviour
 {
     [Header("saveData")]
-    [SerializeField]private int _id;
+    [SerializeField] private int _id;
     public int Id => _id;
     [SerializeField] private StageState _stageState;
+
+    public Player player;
     public StageState StageState
     {
         get => _stageState;
@@ -25,8 +22,14 @@ public class Stage : MonoBehaviour
     public Vector3 PlayerStartPosition => playerStartPosition;
     [SerializeField] private Vector3 destination;
     public Vector3 Destination => destination;
+    public GameObject TestDestination;
 
-    public void SetIdForProto(int id) => _id = id;
+
+    public void Start()
+    {
+        SetStage();
+    }
+
     public void SetState(StageState state)
     {
         StageState = state;
@@ -41,4 +44,10 @@ public class Stage : MonoBehaviour
     {
         StageState = data.stageState;
     }
+    void SetStage()
+    {
+        player.transform.position = PlayerStartPosition;
+        TestDestination.transform.position = Destination;
+    }
+
 }
