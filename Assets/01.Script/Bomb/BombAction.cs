@@ -12,11 +12,17 @@ public class BombAction : MonoBehaviour
     [SerializeField] private float radius;
     [SerializeField] private float force;
     [SerializeField] private BombType bombType;
-    
+
+
+    private void Start()
+    {
+        Init();
+        Invoke("Explode", _data.explodeTime);
+    }
     public void Explode()
     {
-        //Init();
-        Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
+        Init();
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _data.explodeRange);
 
         foreach (Collider hit in colliders)
         {
@@ -24,7 +30,9 @@ public class BombAction : MonoBehaviour
 
             foreach (var reactable in reactables)
             {
-                reactable.OnAffected(transform.position, force, radius, bombType);
+                reactable.OnAffected(transform.position, _data.explodePower, _data.explodeRange, _data.bombType);
+                //reactable.OnAffected(transform.position, force, radius, bombType);
+                Destroy(gameObject);
             }
         }
     }

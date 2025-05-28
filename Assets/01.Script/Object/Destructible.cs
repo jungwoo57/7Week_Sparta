@@ -14,7 +14,7 @@ public class Destructible : MonoBehaviour, IAffected
 
     public void OnAffected(Vector3 pos, float force, float radius, BombType type)
     {
-        if (type != BombType.Demolition)
+        if (type == BombType.Demolition)
         {
             curHealth -= force;
             if (curHealth <= 0f)
