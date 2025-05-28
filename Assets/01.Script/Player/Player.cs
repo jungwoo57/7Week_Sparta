@@ -80,7 +80,6 @@ public class Player : MonoBehaviour, IAffected
     {
         if(type == BombType.Bound)
         {
-            Debug.Log("점프폭탄 맞음");
             rigid.AddForce(Vector3.up * force, ForceMode.Impulse);
         }
     }
