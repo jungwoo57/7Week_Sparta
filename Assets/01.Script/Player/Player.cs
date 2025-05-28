@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using _01.Script.Object;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IAffected
@@ -10,13 +9,13 @@ public class Player : MonoBehaviour, IAffected
 
     public Transform bombPos; // �÷��̾ ��ź ����ִ� ��ġ
     public Transform bombSpawnPos; // ��ź ��ȯ ��ġ
-    public BombData[] bomb; // ������������ �ʿ��� ��ź ���� �޾ƿ�
+    public BombBase[] bomb; // ������������ �ʿ��� ��ź ���� �޾ƿ�
 
     private int curBombIndex; // ���� ��� �ִ� ��ź��ȣ
     private int maxBombIndex; // ����� ��ź ���� �� �ְ�ġ ����
     public int useBombCount; // ����� ��ź �� ��
     public GameObject curBomb; //���� ��� �ִ� ��ź
-    public BombData curBombData;
+    public BombBase curBombData;
 
     private Animator anim;
     private Rigidbody rigid;
@@ -24,6 +23,7 @@ public class Player : MonoBehaviour, IAffected
     {
         controller = GetComponent<PlayerController>();
         anim = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -73,8 +73,12 @@ public class Player : MonoBehaviour, IAffected
         Debug.Log("��ź�� �ٲ�����ϴ�" + curBombIndex);
     }
 
-    public void OnAffected(Vector3 pos, float force, float radius, TestBombType type) 
+    public void OnAffected(Vector3 pos, float force, float radius, BombType type) 
     {
-        rigid?.AddExplosionForce(force, pos, radius);
+        if(type == BombType.Bound)
+        {
+            if (rigid == null) Debug.Log("rigid is null");
+            rigid.AddForce(Vector3.up * force, ForceMode.Impulse);
+        }
     }
 }

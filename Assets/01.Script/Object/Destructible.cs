@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using _01.Script.Object;
 using UnityEngine;
 
 public class Destructible : MonoBehaviour, IAffected
@@ -13,18 +12,18 @@ public class Destructible : MonoBehaviour, IAffected
         curHealth = maxHealth;
     }
 
-    public void OnAffected(Vector3 pos, float force, float radius, TestBombType type)
+    public void OnAffected(Vector3 pos, float force, float radius, BombType type)
     {
-        if (type != TestBombType.Emp)
+        if (type != BombType.Demolition)
         {
             curHealth -= force;
             if (curHealth <= 0f)
             {
-                Break();
+                Demolition();
             }
         }
     }
-    private void Break()
+    private void Demolition()
     {
         Destroy(gameObject);
     }
