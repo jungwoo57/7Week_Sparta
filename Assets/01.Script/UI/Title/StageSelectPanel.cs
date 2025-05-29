@@ -25,21 +25,18 @@ public class StageSelectPanel : MonoBehaviour
     private int allStageCount;
     private int pageCount;
     private int currentPage;
-    private const int maxStageCountPerPage = 12;
-
-    // private Progress progress;
+    private const int MaxStageCountPerPage = 12;
 
     StageManager stageManager;
     SaveLoadManager saveLoadManager;
     public void Start()
     {
         ClearContentBox();
-        // progress = SaveLoadManager.Instance.progress;
-        //InitProgressForTest();
+
         stageManager = GameManager.Instance.StageManager;
         saveLoadManager = GameManager.Instance.SaveLoadManager;
-        allStageCount = GameManager.AllStageCount;
-        pageCount = allStageCount / maxStageCountPerPage + 1;
+        allStageCount = StageManager.stageCount;
+        pageCount = allStageCount / MaxStageCountPerPage + 1;
 
         ShowTargetPage(1);
     }
@@ -51,22 +48,7 @@ public class StageSelectPanel : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-
-    // private void InitProgressForTest()
-    // {
-    //     progress = new Progress
-    //     {
-    //         stages = new List<StageInfo>()
-    //     };
-    //     for (int i = 0; i < 15; i++)
-    //     {
-    //         StageInfo stage = new StageInfo();
-    //         stage.id = i;
-    //         stage.state = i == 0 ? StageState.Open : StageState.Locked;
-    //         progress.stages.Add(stage);
-    //     }
-    // }
-
+    
     private void ShowTargetPage(int pageNumber)
     {
         if (allStageCount == 0)
@@ -81,23 +63,22 @@ public class StageSelectPanel : MonoBehaviour
 
         // 페이지에 출력할 스테이지 버튼 수
         int requiredButtonCount;
-        if (currentPage == pageCount) requiredButtonCount = allStageCount % maxStageCountPerPage;
+        if (currentPage == pageCount) requiredButtonCount = allStageCount % MaxStageCountPerPage;
         else requiredButtonCount = 12;
 
         int startIndex = (pageNumber - 1) * 12;
-        /*for (int i = startIndex; i < startIndex + requiredButtonCount; i++)
+        for (int i = startIndex; i < startIndex + requiredButtonCount; i++)
         {
-            Stage stage = stageManager.stages[i];
-            StageData saveData = saveLoadManager.saveDataList[i];
+            StageData stage = stageManager.stageDataList[i];
             StageSelectButton button = Instantiate(stageSelectButtonPrefab, contentBox.transform)
                 .GetComponent<StageSelectButton>();
-            button.Init(saveData);
+            button.Init(stage);
 
             //button.Init(i);
             // 렌더링 리프레시 (안 열린 스테이지 찰나 활성화된 상태로 보이는 것  방지)
             button.gameObject.SetActive(false);
             button.gameObject.SetActive(true);
-        }*/
+        }
     }
 
     public void OnClickBackButton()
