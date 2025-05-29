@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.StageManager.uiManager = this;
+        //GameManager.Instance.StageManager.uiManager = this;
         gameClearPanel.gameObject.SetActive(false);
     }
 

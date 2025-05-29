@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        if (stageManager.IsCleared) return;
+        //if (stageManager.IsCleared) return;
         mouseDelta = context.ReadValue<Vector2>();
     }
 

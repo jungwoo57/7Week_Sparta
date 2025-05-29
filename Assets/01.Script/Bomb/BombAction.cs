@@ -15,7 +15,7 @@ public class BombAction : MonoBehaviour
 
     private void Awake()
     {
-        _collider = this.gameObject.GetComponent<Collider>();
+        _collider = this.gameObject.GetComponent<BoxCollider>();
     }
 
     private void Start()
@@ -42,7 +42,8 @@ public class BombAction : MonoBehaviour
         float time = 0f;
         while (time < 1f)
         {
-            _collider.transform.localScale = Vector3.Lerp(Vector3.one * _data.explodeRange, Vector3.zero, time);
+            _collider.enabled = false;
+            transform.localScale = Vector3.Lerp(Vector3.one * _data.explodeRange, Vector3.zero, time);
             time += Time.deltaTime;
             yield return null;
         }

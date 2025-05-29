@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using TMPro;
 using UnityEngine;
@@ -24,15 +24,16 @@ public class StageSelectButton : MonoBehaviour
         buttonComponent = GetComponent<Button>();
     }
 
-    public void Init(SaveData _saveData)
+    public void Init(StageData saveData)
     {
+        id = saveData.id;
+        buttonText.text = "Stage " + (saveData.id + 1);
         
-        buttonText.text = "Stage " + _saveData.id;
-        
-        if(_saveData.stageState == StageState.Locked)
+        if(saveData.stageState == StageState.Locked)
             buttonComponent.interactable = false;
         buttonComponent.onClick.AddListener(OnClick);
     }
+    
 
     // public void Init(int _id)
     // {
@@ -45,8 +46,8 @@ public class StageSelectButton : MonoBehaviour
 
     public void OnClick()
     {
-        SceneManager.LoadScene("Seunghwa_JWPlayerCopy_InGameUI");
-        GameManager.Instance.StageManager.InitStage();
+         SceneManager.LoadScene("Seunghwa_JWPlayerCopy_InGameUI");
+        // GameManager.Instance.StageManager.LoadStage(id);
     }
 }
 

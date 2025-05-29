@@ -1,12 +1,12 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class PlayerUI : MonoBehaviour
 {
-    public Player player; // ¸Å´ÏÀú ÀÎ½ºÅÏ½º ÈÄ ÇØ´ç ÄÚµå ½Ì±ÛÅæ¿¡¼­ °¡Á®¿À±â
-    public TextMeshProUGUI bombCount; // »ç¿ëÇÑ ÆøÅº °¹¼ö
+    public Player player; // ï¿½Å´ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½Úµï¿½ ï¿½Ì±ï¿½ï¿½æ¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public TextMeshProUGUI bombCount; // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Åº ï¿½ï¿½ï¿½ï¿½
 
     public TextMeshProUGUI bombName;
     public Image bombImage;
@@ -21,7 +21,7 @@ public class PlayerUI : MonoBehaviour
     }
     private void UIUpdate()
     {
-        bombCount.text = " X " + player.useBombCount.ToString();
-        bombName.text = player.curBombData.bombName; // bombdata.name À¸·Î º¯°æ¿¹Á¤
+        bombCount.text = " X " + GameManager.Instance.PlayerManager.Player.useBombCount.ToString();
+        bombName.text = GameManager.Instance.PlayerManager.Player.curBombData.bombName; // 
     }
 }
