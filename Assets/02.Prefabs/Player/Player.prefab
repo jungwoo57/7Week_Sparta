@@ -246,7 +246,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9056095483928746867}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: CameraContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -543,7 +543,7 @@ MonoBehaviour:
   cameraContainer: {fileID: 9056095483928746867}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 129
 --- !u!114 &5320190823415354988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -560,11 +560,13 @@ MonoBehaviour:
   bombPos: {fileID: 3143123897436403576}
   bombSpawnPos: {fileID: 6659029150165546105}
   bomb:
-  - {fileID: 11400000, guid: 22a18c07501c3d94ab7780c619c10e77, type: 2}
-  - {fileID: 11400000, guid: 0b468acda5970ac4b9d2ae08a70074d5, type: 2}
+  - {fileID: 11400000, guid: 205e37374f517764492c55d17c53e5cc, type: 2}
+  - {fileID: 11400000, guid: e0e0ac48f17c8394ea5684a18f34e4b4, type: 2}
   useBombCount: 0
   curBomb: {fileID: 0}
   curBombData: {fileID: 0}
+  playerManager: {fileID: 0}
+  coolTime: 0
 --- !u!95 &491407497916583901
 Animator:
   serializedVersion: 5

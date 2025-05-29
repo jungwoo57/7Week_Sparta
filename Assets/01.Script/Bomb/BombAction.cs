@@ -42,7 +42,7 @@ public class BombAction : MonoBehaviour
                 //reactable.OnAffected(transform.position, force, radius, bombType);
             }
         }
-        AudioManager.Instance.PlaySFX(SoundType.None);
+        AudioManager.Instance.PlaySFX(SoundType.Explosion);
         float time = 0f;
         while (time < 1f)
         {
