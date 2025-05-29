@@ -6,7 +6,7 @@ public class TestDestination : MonoBehaviour
 {
     void OnDestination()
     {
-        GameManager.Instance.StageManager.ClearStage();
+        //GameManager.Instance.StageManager.ClearStage();
         Debug.Log("��ǥ ����");
     }
 
