@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace _01.Script.Object
+namespace _01.Script.Object.ExpliedSwitch
 {
-    public abstract class ActivateSwitch : MonoBehaviour
+    public abstract class ExplodeSwitch : MonoBehaviour
     {
         [SerializeField] protected GameObject targetObject;
 
