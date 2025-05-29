@@ -4,18 +4,11 @@ using System.IO;
 using UnityEngine;
 
 [Serializable]
-public struct SaveData
-{
-    public int id;
-    public StageState stageState;
-}
-
-[Serializable]
 public class SaveDataWrapper
 {
-    public List<SaveData> dataList;
+    public List<StageData> dataList;
 
-    public SaveDataWrapper(List<SaveData> list)
+    public SaveDataWrapper(List<StageData> list)
     {
         dataList = list;
     }
@@ -24,34 +17,27 @@ public class SaveDataWrapper
 public class SaveLoadManager : MonoBehaviour
 {
     private string path;
-    public List<SaveData> saveDataList = new();
+    public List<StageData> saveDataList = new();
 
     private void Awake()
     {
         path = Application.persistentDataPath + "/save.json";
     }
 
-    private void Start()
+    public void SaveData(List<StageData> stageDataList)
     {
-        LoadData();
-    }
+        saveDataList?.Clear();
 
-    public void SaveData(List<Stage> stages)
-    {
-        if (saveDataList != null)
+        foreach (StageData stageData in stageDataList)
         {
-            saveDataList.Clear();
-        }
-
-        foreach (Stage stage in stages)
-        {
-            saveDataList.Add(stage.ToSaveData());
+            saveDataList.Add(stageData);
         }
 
         try
         {
             string json = JsonUtility.ToJson(new SaveDataWrapper(saveDataList));
             File.WriteAllText(path, json);
+            Debug.Log("Save Success");
         }
         catch (IOException e)
         {
@@ -59,25 +45,40 @@ public class SaveLoadManager : MonoBehaviour
         }
     }
 
-    public List<SaveData> LoadData()
+    public List<StageData> LoadData(List<StageData> stageDataList)
     {
         if (!File.Exists(path))
         {
             Debug.LogWarning("Save file not found.");
-            return new List<SaveData>();
+            return stageDataList;
         }
 
         try
         {
             string json = File.ReadAllText(path);
             SaveDataWrapper wrapper = JsonUtility.FromJson<SaveDataWrapper>(json);
-            saveDataList = wrapper.dataList;
-            return saveDataList;
+
+            if (wrapper != null && wrapper.dataList != null)
+            {
+                if (wrapper.dataList.Count != StageManager.stageCount)
+                {
+                    Debug.LogError("DataBroken: save data count mismatch.");
+                    return stageDataList;
+                }
+
+                saveDataList = new List<StageData>(wrapper.dataList);
+                stageDataList = new List<StageData>(saveDataList);
+            }
+            else
+            {
+                Debug.LogWarning("Loaded data is null or empty.");
+            }
         }
         catch (IOException e)
         {
             Debug.LogError($"Load Failed: {e.Message}");
-            return new List<SaveData>();
         }
+
+        return stageDataList;
     }
 }

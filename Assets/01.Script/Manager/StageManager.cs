@@ -1,74 +1,72 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public enum StageState
+{
+    Locked,
+    Open,
+    Cleared
+}
+
+[Serializable]
+public struct StageData
+{
+    public int id;
+    public StageState stageState;
+}
 
 public class StageManager : MonoBehaviour
 {
-    public Stage curStage;
-    public List<Stage> stages = new List<Stage>();
+    public const int stageCount = 3;
+    public List<StageData> stageDataList = new List<StageData>();
+    public int curStageIndex;
 
     //Player player;
 
     private void Start()
     {
-        SetStages();
-        GameManager.Instance.SaveLoadManager.SaveData(stages);
-        UpdateStageStates();
+        NewStageData();
     }
 
-    private void Update()
+    public void NewStageData()
     {
-        CheckClearCondition();
-    }
+        // stageCount 갯수의 stages List를 생성. id는 0,1,2 이고 stageStat는 Locked로 초기화
+        stageDataList.Clear();
 
-    private void SetStages()
-    {
-        GameObject stageParent = GameObject.Find("Stage");
-        if (stageParent == null)
+        for (int i = 0; i < stageCount; i++)
         {
-            Debug.LogError("Stage is missing!");
-            return;
-        }
+            StageState state = (i == 0) ? StageState.Open : StageState.Locked;
 
-        for (int i = 0; i < stageParent.transform.childCount; i++)
-        {
-            Transform child = stageParent.transform.GetChild(i);
-            Stage stageComponent = child.GetComponent<Stage>();
+            StageData stageData = new StageData
+            {
+                id = i,
+                stageState = state
+            };
 
-            if (stageComponent != null)
-            {
-                stages.Add(stageComponent);
-            }
-            else
-            {
-                Debug.LogError("Stage component is missing!");
-            }
+            stageDataList.Add(stageData);
         }
     }
 
-    public void UpdateStageStates()
+    public void SaveStageData()
     {
-        var loadedList = GameManager.Instance.SaveLoadManager.saveDataList;
+        GameManager.Instance.SaveLoadManager.SaveData(stageDataList);
+    }
 
-        foreach (var data in loadedList)
-        {
-            Stage stage = stages.Find(s => s.Id == data.id);
-            if (stage != null)
-            {
-                stage.LoadFromSaveData(data);
-            }
-            else
-            {
-                Debug.LogWarning($"ID {data.id}에 해당하는 Stage를 찾을 수 없습니다.");
-            }
-        }
+    public void LoadStageData()
+    {
+        stageDataList = GameManager.Instance.SaveLoadManager.LoadData(stageDataList);
     }
 
     public void LoadStage(int stageId)
     {
         // ReStart 버튼으로 스테이지 정보 초기화
-        curStage = stages[stageId];
+        curStageIndex = stageId;
 
-        //player.transform = curStage.PlayerStartPosition;
+        SceneManager.LoadScene($"Stage{curStageIndex}");
+
+        // player.transform = curStage.PlayerStartPosition;
         // camera.transform = _curStage.CameraStartPosition;
     }
 
@@ -82,10 +80,10 @@ public class StageManager : MonoBehaviour
     private void ClearStage()
     {
         // 현재 스테이지의 State를 Cleared로 바꾸고, 다음 스테이지를 Open한다.
-        stages[curStage.Id].SetState(StageState.Cleared);
-        stages[curStage.Id + 1].SetState(StageState.Open);
+        //stages[curStage.Id].SetState(StageState.Cleared);
+        //stages[curStage.Id + 1].SetState(StageState.Open);
 
         // 다음 스테이지를 로드
-        LoadStage(curStage.Id + 1);
+        //LoadStage(curStage.Id + 1);
     }
 }

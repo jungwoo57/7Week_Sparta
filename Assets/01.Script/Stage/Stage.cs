@@ -1,14 +1,8 @@
 using UnityEngine;
 
-public enum StageState
-{
-    Locked,
-    Open,
-    Cleared
-}
-
 public class Stage : MonoBehaviour
 {
+    /**
     [Header("saveData")]
     [SerializeField]private int _id;
     public int Id => _id;
@@ -17,7 +11,7 @@ public class Stage : MonoBehaviour
     {
         get => _stageState;
         set => _stageState = value;
-    }
+    }*/
 
     [Header("MapData")]
     [SerializeField] private int _bombCount;
@@ -25,19 +19,4 @@ public class Stage : MonoBehaviour
     public Vector3 PlayerStartPosition => playerStartPosition;
     [SerializeField] private Vector3 destination;
     public Vector3 Destination => destination;
-
-    public void SetState(StageState state)
-    {
-        StageState = state;
-    }
-
-    public SaveData ToSaveData()
-    {
-        return new SaveData { id = _id, stageState = _stageState };
-    }
-
-    public void LoadFromSaveData(SaveData data)
-    {
-        StageState = data.stageState;
-    }
 }
