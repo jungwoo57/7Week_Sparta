@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public abstract class ActivateSwitch : MonoBehaviour
+namespace _01.Script.Object
 {
-    [SerializeField] protected GameObject targetObject;
+    public abstract class ActivateSwitch : MonoBehaviour
+    {
+        [SerializeField] protected GameObject targetObject;
 
-    protected abstract void Trigger();
+        protected abstract void Trigger();
+    }
 }
 

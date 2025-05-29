@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _01.Script.Object
 {
-    public class InteractableButton : ActivateSwitch
+    public abstract class InteractableSwitch : MonoBehaviour
     {
         private bool onStay = false;
 
@@ -30,9 +30,7 @@ namespace _01.Script.Object
             }
         }
 
-        protected override void Trigger()
-        {
-            Debug.Log("플레이어가 활성화");
-        }
+        protected abstract void Trigger();
+
     }
 }
