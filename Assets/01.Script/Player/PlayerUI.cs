@@ -21,7 +21,7 @@ public class PlayerUI : MonoBehaviour
     }
     private void UIUpdate()
     {
-        bombCount.text = " X " + GameManager.Instance.PlayerManager.Player.useBombCount.ToString();
-        bombName.text = GameManager.Instance.PlayerManager.Player.curBombData.bombName; // 
+        bombCount.text = " X " + player.useBombCount.ToString();
+        bombName.text = player.curBombData.bombName; // 
     }
 }
