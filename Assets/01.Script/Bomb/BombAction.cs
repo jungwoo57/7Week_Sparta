@@ -1,4 +1,4 @@
-
+﻿
 using System.Collections;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -13,17 +13,21 @@ public class BombAction : MonoBehaviour
     [SerializeField] private float force;
     [SerializeField] private BombType bombType;
 
+    private void Awake()
+    {
+        _collider = this.gameObject.GetComponent<Collider>();
+    }
 
     private void Start()
     {
         Init();
-        Invoke("Explode", _data.explodeTime);
+        StartCoroutine(Explode());
     }
-    public void Explode()
+    public IEnumerator Explode()
     {
-        Init();
         Collider[] colliders = Physics.OverlapSphere(transform.position, _data.explodeRange);
 
+        yield return new WaitForSeconds(_data.explodeTime);
         foreach (Collider hit in colliders)
         {
             IAffected[] reactables = hit.GetComponents<IAffected>();
@@ -32,9 +36,17 @@ public class BombAction : MonoBehaviour
             {
                 reactable.OnAffected(transform.position, _data.explodePower, _data.explodeRange, _data.bombType);
                 //reactable.OnAffected(transform.position, force, radius, bombType);
-                Destroy(gameObject);
             }
         }
+
+        float time = 0f;
+        while (time < 1f)
+        {
+            _collider.transform.localScale = Vector3.Lerp(Vector3.one * _data.explodeRange, Vector3.zero, time);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
     }
 
     private void Init()
