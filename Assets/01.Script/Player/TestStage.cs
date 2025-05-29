@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +9,6 @@ public class TestStage : MonoBehaviour
     public int Id => _id;
     [SerializeField] private StageState _stageState;
 
-    public Player player;
     public StageState StageState
     {
         get => _stageState;
@@ -23,7 +22,7 @@ public class TestStage : MonoBehaviour
     [SerializeField] private Vector3 destination;
     public Vector3 Destination => destination;
     public GameObject TestDestination;
-
+    public Player player;
 
     public void Start()
     {

@@ -4247,6 +4247,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestStage 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1292253400734184272, guid: 0d807bbec2cf8814daf731af7c66c53d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2698548337223247740, guid: 0d807bbec2cf8814daf731af7c66c53d, type: 3}
       propertyPath: player
       value: 
