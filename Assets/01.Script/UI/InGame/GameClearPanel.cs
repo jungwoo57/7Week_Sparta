@@ -95,11 +95,7 @@ public class GameClearPanel : MonoBehaviour
         // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void OnClickRetryButton()
-    {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        stageManager.Restart();
-    }
+    
 
     public void OnDisable()
     {

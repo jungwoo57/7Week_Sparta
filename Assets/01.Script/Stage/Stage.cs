@@ -16,6 +16,7 @@ public class Stage : MonoBehaviour
 
     public float ElapsedTime { get; private set; }
     public bool IsCleared { get; private set; }
+    public bool IsPaused { get; private set; }
 
     private void Awake()
     {
@@ -54,6 +55,7 @@ public class Stage : MonoBehaviour
         usedBombCount = 0;
         ElapsedTime = 0;
         IsCleared = false;
+        IsPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -69,5 +71,21 @@ public class Stage : MonoBehaviour
         // 경과 시간은 Update에도 적혀있는 ElapsedTime 참고
         GameManager.Instance.StageManager.SaveStageClearedData();
         uiManager.ShowGameClearPanel();
+    }
+
+    
+    public void PauseStage()
+    {
+        IsPaused = true;
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0;
+        uiManager.ShowPausedPanel();
+    }
+    public void ResumeStage()
+    {
+        IsPaused = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1;
+        uiManager.HidePausedPanel();
     }
 }

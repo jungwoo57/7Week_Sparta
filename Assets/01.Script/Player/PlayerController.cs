@@ -24,17 +24,20 @@ public class PlayerController : MonoBehaviour
     private const float rotateSmoothCoef = 20f;
 
     StageManager stageManager;
+
     private void Awake()
     {
         player = GetComponent<Player>();
         rigid = GetComponent<Rigidbody>();
         destAngle = cameraContainer.transform.eulerAngles;
     }
+
     private void Start()
     {
         stageManager = GameManager.Instance.StageManager;
         //Cursor.lockState = CursorLockMode.Locked;
     }
+
     private void FixedUpdate()
     {
         Move();
@@ -42,15 +45,17 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (Stage.Instance.IsPaused) return;
         Look();
     }
+
     public void OnMove(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Performed)
+        if (context.phase == InputActionPhase.Performed)
         {
             curMovement = context.ReadValue<Vector2>();
         }
-        else if(context.phase == InputActionPhase.Canceled)
+        else if (context.phase == InputActionPhase.Canceled)
         {
             curMovement = Vector2.zero;
         }
@@ -67,12 +72,12 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-       if(context.phase == InputActionPhase.Started && IsGround())
+        if (context.phase == InputActionPhase.Started && IsGround())
         {
             rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         }
     }
-    
+
 
     public void OnLook(InputAction.CallbackContext context)
     {
@@ -84,27 +89,27 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 cameraAngle = cameraContainer.localEulerAngles;
         Vector3 transformAngle = transform.eulerAngles;
-        
+
         destAngle.x -= mouseDelta.y * cameraSensitive;
         destAngle.x = Mathf.Clamp(destAngle.x, -90f, 90f);
         cameraAngle.x = Mathf.LerpAngle(cameraAngle.x, destAngle.x, rotateSmoothCoef * Time.deltaTime);
 
-         destAngle.y += mouseDelta.x * cameraSensitive;
-         destAngle.y = AngleCalculator.NormalizeAngle360(destAngle.y);
-         transformAngle.y = Mathf.LerpAngle(transformAngle.y, destAngle.y, rotateSmoothCoef * Time.deltaTime);
-        
+        destAngle.y += mouseDelta.x * cameraSensitive;
+        destAngle.y = AngleCalculator.NormalizeAngle360(destAngle.y);
+        transformAngle.y = Mathf.LerpAngle(transformAngle.y, destAngle.y, rotateSmoothCoef * Time.deltaTime);
+
         cameraContainer.localEulerAngles = cameraAngle;
         transform.eulerAngles = transformAngle;
-        
     }
+
     private bool IsGround()
     {
         Ray[] ray = new Ray[4]
         {
-            new Ray(transform.position + (transform.forward*0.2f) + transform.up*0.01f,Vector3.down),
-            new Ray(transform.position + (-transform.forward*0.2f) + transform.up*0.01f,Vector3.down),
-            new Ray(transform.position + (transform.right*0.2f) + transform.up*0.01f,Vector3.down),
-            new Ray(transform.position + (-transform.right*0.2f) + transform.up*0.01f,Vector3.down),
+            new Ray(transform.position + (transform.forward * 0.2f) + transform.up * 0.01f, Vector3.down),
+            new Ray(transform.position + (-transform.forward * 0.2f) + transform.up * 0.01f, Vector3.down),
+            new Ray(transform.position + (transform.right * 0.2f) + transform.up * 0.01f, Vector3.down),
+            new Ray(transform.position + (-transform.right * 0.2f) + transform.up * 0.01f, Vector3.down),
         };
 
         for (int i = 0; i < ray.Length; i++)
@@ -114,12 +119,13 @@ public class PlayerController : MonoBehaviour
                 return true;
             }
         }
+
         return false;
     }
 
     public void SpawnBomb(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Started)
+        if (context.phase == InputActionPhase.Started)
         {
             player.SpawnBomb();
         }
@@ -132,6 +138,7 @@ public class PlayerController : MonoBehaviour
             player.SwapBomb(1);
         }
     }
+
     public void SwapBomb2(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started)
@@ -139,6 +146,7 @@ public class PlayerController : MonoBehaviour
             player.SwapBomb(2);
         }
     }
+
     public void SwapBomb3(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started)
@@ -146,11 +154,23 @@ public class PlayerController : MonoBehaviour
             player.SwapBomb(3);
         }
     }
+
     public void SwapBomb4(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started)
         {
             player.SwapBomb(4);
+        }
+    }
+
+    public void KeyDownEsc(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            if (Stage.Instance.IsPaused)
+                Stage.Instance.ResumeStage();
+            else
+                Stage.Instance.PauseStage();
         }
     }
 }
