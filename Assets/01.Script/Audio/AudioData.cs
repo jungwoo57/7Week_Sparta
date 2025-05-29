@@ -21,5 +21,6 @@ namespace _01.Script.Audio
         None,
         MainBGM,
         BossBGM,
+        Explosion
     }
 }

@@ -1,4 +1,5 @@
 ﻿
+using _01.Script.Audio;
 using System.Collections;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -26,7 +27,6 @@ public class BombAction : MonoBehaviour
     public IEnumerator Explode()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, _data.explodeRange);
-
         yield return new WaitForSeconds(_data.explodeTime);
         foreach (Collider hit in colliders)
         {
@@ -45,6 +45,7 @@ public class BombAction : MonoBehaviour
             _collider.enabled = false;
             transform.localScale = Vector3.Lerp(Vector3.one * _data.explodeRange, Vector3.zero, time);
             time += Time.deltaTime;
+            AudioManager.Instance.PlaySFX(SoundType.Explosion);
             yield return null;
         }
 
