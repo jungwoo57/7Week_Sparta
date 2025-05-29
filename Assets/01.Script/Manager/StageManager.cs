@@ -57,6 +57,7 @@ public class StageManager : MonoBehaviour
         ElapsedTime = 0;
         IsCleared = false;
         Cursor.lockState = CursorLockMode.Locked;
+
     }
 
 
@@ -101,7 +102,7 @@ public class StageManager : MonoBehaviour
     }
 
     // StageManager에서만 사용하는 메서드. stageId로 씬을 불러오는 메서드.
-    private void LoadStage(int stageId)
+    public void LoadStage(int stageId)
     {
         curStageId = stageId;
 
@@ -145,7 +146,7 @@ public class StageManager : MonoBehaviour
             Debug.Log("마지막 스테이지입니다.");
         }
         SaveStageData();
-        LoadStage(curStageId);
+        
     }
 
     

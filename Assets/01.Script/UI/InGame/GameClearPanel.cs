@@ -86,14 +86,13 @@ public class GameClearPanel : MonoBehaviour
     {
         Debug.Log("스테이지 ID 기반 작동입니다. 기능이 완료되면 나중에 로그 지워주세요");
 
-        int curStageId = stageManager.curStage.Id;
-        SceneManager.LoadScene($"Stage{curStageId + 1}");
-        stageManager.InitStage(curStageId + 1);
+        int curStageId = stageManager.curStageId;
+        stageManager.LoadStage(curStageId + 1);
     }
 
     public void OnClickRetryButton()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        stageManager.InitStage(stageManager.curStage.Id);
+        stageManager.LoadStage(stageManager.curStageId);
     }
 }
