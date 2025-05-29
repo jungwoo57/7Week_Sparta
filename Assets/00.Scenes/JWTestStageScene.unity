@@ -3720,37 +3720,6 @@ RectTransform:
   m_AnchoredPosition: {x: 252, y: 28}
   m_SizeDelta: {x: 500, y: 152.33}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1816564702
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1816564703}
-  m_Layer: 0
-  m_Name: Stage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1816564703
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1816564702}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 51.75, y: 0.58931655, z: 0.060077786}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1837792113
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4278,6 +4247,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestStage 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1292253400734184272, guid: 0d807bbec2cf8814daf731af7c66c53d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2698548337223247740, guid: 0d807bbec2cf8814daf731af7c66c53d, type: 3}
       propertyPath: player
       value: 
@@ -4338,4 +4311,3 @@ SceneRoots:
   - {fileID: 353907456}
   - {fileID: 3559910163083295165}
   - {fileID: 1589704624}
-  - {fileID: 1816564703}
