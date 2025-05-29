@@ -1,23 +1,44 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class Stage : MonoBehaviour
 {
+    public static Stage Instance { get; private set; }
+
+
     [Header("MapData")]
-    [SerializeField] private int _bombCount;
-    [SerializeField] private int usedBombCount;
-    [SerializeField] private Vector3 playerStartPosition;
-    public Vector3 PlayerStartPosition => playerStartPosition;
+    [SerializeField] private int bombCount; // maxbombCount로 변경
+    [SerializeField] private int usedBombCount; // 현재 폭탄 갯수로 변경
     [SerializeField] private Vector3 destination;
     public Vector3 Destination => destination;
 
-    public UIManager uiManager;
+    private UIManager uiManager;
+    private Player player;
 
     public float ElapsedTime { get; private set; }
     public bool IsCleared { get; private set; }
 
     private void Awake()
     {
-        IsCleared = false;
+        #region Singleton
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            if (Instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+        #endregion
+    }
+
+    private void Start()
+    {
+        player = GetComponent<Player>();
+
+        InitStage();
     }
 
     private void Update()
@@ -26,6 +47,8 @@ public class Stage : MonoBehaviour
         {
             ElapsedTime += Time.deltaTime;
         }
+
+        CheckPlayerPosition();
     }
 
     public void InitStage()
@@ -35,7 +58,6 @@ public class Stage : MonoBehaviour
         IsCleared = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
-
 
     public void ClearStage()
     {
@@ -50,4 +72,11 @@ public class Stage : MonoBehaviour
         uiManager.ShowGameClearPanel();
     }
 
+    private void CheckPlayerPosition()
+    {
+        if (player.gameObject.transform.position == destination)
+        {
+            ClearStage();
+        }
+    }
 }
