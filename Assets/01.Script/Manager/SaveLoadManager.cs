@@ -1,22 +1,14 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-
-[Serializable]
-public struct SaveData
-{
-    public int id;
-    public StageState stageState;
-}
 
 [Serializable]
 public class SaveDataWrapper
 {
-    public List<SaveData> dataList;
+    public List<StageData> dataList;
 
-    public SaveDataWrapper(List<SaveData> list)
+    public SaveDataWrapper(List<StageData> list)
     {
         dataList = list;
     }
@@ -25,44 +17,27 @@ public class SaveDataWrapper
 public class SaveLoadManager : MonoBehaviour
 {
     private string path;
-    public List<SaveData> saveDataList = new();
+    public List<StageData> saveDataList = new();
 
     private void Awake()
     {
         path = Application.persistentDataPath + "/save.json";
     }
 
-    private void Start()
+    public void SaveData(List<StageData> stageDataList)
     {
-        Debug.Log("세이브로드 매니저 초기화 진행");
-        DeleteData();
-        LoadData();
-    }
+        saveDataList?.Clear();
 
-    private void DeleteData()
-    {
-        if (File.Exists(path))
+        foreach (StageData stageData in stageDataList)
         {
-            File.Delete(path);
-        }
-    }
-
-    public void SaveData(List<Stage> stages)
-    {
-        if (saveDataList != null)
-        {
-            saveDataList.Clear();
-        }
-
-        foreach (Stage stage in stages)
-        {
-            saveDataList.Add(stage.ToSaveData());
+            saveDataList.Add(stageData);
         }
 
         try
         {
             string json = JsonUtility.ToJson(new SaveDataWrapper(saveDataList));
             File.WriteAllText(path, json);
+            Debug.Log("Save Success");
         }
         catch (IOException e)
         {
@@ -70,40 +45,41 @@ public class SaveLoadManager : MonoBehaviour
         }
     }
 
-    public void LoadData()
+
+    public List<StageData> LoadData(List<StageData> stageDataList)
     {
         if (!File.Exists(path))
         {
             Debug.LogWarning("Save file not found.");
-            List<SaveData> saveData = new();
-            for (int i = 0; i < GameManager.AllStageCount; i++)
-            {
-                SaveData data = new();
-                data.stageState = (i == 0) ? StageState.Open : StageState.Locked;
-                data.id = i;
-                saveData.Add(data);
-            }
-            
-            string json = JsonUtility.ToJson(new SaveDataWrapper(saveData));
-            File.WriteAllText(path, json);
-
-            saveDataList = saveData;
-            
-            Debug.Log("Length - " + saveDataList.Count);
-            //return new List<SaveData>();
+            return stageDataList;
         }
 
         try
         {
             string json = File.ReadAllText(path);
             SaveDataWrapper wrapper = JsonUtility.FromJson<SaveDataWrapper>(json);
-            saveDataList = wrapper.dataList;
-            //return saveDataList;
+
+            if (wrapper != null && wrapper.dataList != null)
+            {
+                if (wrapper.dataList.Count != StageManager.stageCount)
+                {
+                    Debug.LogError("DataBroken: save data count mismatch.");
+                    return stageDataList;
+                }
+
+                saveDataList = new List<StageData>(wrapper.dataList);
+                stageDataList = new List<StageData>(saveDataList);
+            }
+            else
+            {
+                Debug.LogWarning("Loaded data is null or empty.");
+            }
         }
         catch (IOException e)
         {
             Debug.LogError($"Load Failed: {e.Message}");
-            //return new List<SaveData>();
         }
+
+        return stageDataList;
     }
 }
