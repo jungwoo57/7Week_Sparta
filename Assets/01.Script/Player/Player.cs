@@ -18,6 +18,7 @@ public class Player : MonoBehaviour, IAffected
     public BombBase curBombData;
     public PlayerManager playerManager;
 
+    public float coolTime = 0;
     private Animator anim;
     private Rigidbody rigid;
     private void Awake()
@@ -30,6 +31,15 @@ public class Player : MonoBehaviour, IAffected
     private void Start()
     {
         Init();
+    }
+
+    void Update()
+    {
+        if(coolTime > 0)
+        {
+            coolTime -= Time.deltaTime;
+            if (coolTime < 0) coolTime = 0;
+        }
     }
 
     public void Init()
@@ -45,16 +55,18 @@ public class Player : MonoBehaviour, IAffected
         curBombIndex = 0;
 
         curBombData = bomb[curBombIndex];
-        curBomb = Instantiate(bomb[curBombIndex].bombPrefab, bombPos);
+        curBomb = Instantiate(bomb[curBombIndex].equipPrefab, bombPos);
         curBomb.transform.position = bombPos.position;
     }
     public void SpawnBomb()
     {
+        if (coolTime > 0) return;
         GameObject spawnBomb = Instantiate(bomb[curBombIndex].bombPrefab);
         spawnBomb.transform.position = bombSpawnPos.position;
         spawnBomb.AddComponent<Rigidbody>();
         spawnBomb.AddComponent<BombAction>();
         anim.SetTrigger("SpawnBomb");
+        coolTime = bomb[curBombIndex].bombCooldown;
     }
 
 
@@ -71,7 +83,7 @@ public class Player : MonoBehaviour, IAffected
             Destroy(curBomb);
         }
         curBombData = bomb[curBombIndex];
-        curBomb = Instantiate(bomb[curBombIndex].bombPrefab, bombPos);
+        curBomb = Instantiate(bomb[curBombIndex].equipPrefab, bombPos);
         curBomb.transform.position = bombPos.position;
     }
 

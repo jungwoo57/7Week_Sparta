@@ -9062,6 +9062,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70ee7fb0a9312214b975367a9bef4c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleTransform: {fileID: 0}
+  restartBtnTransform: {fileID: 0}
+  nextStageBtnTransform: {fileID: 0}
+  quitBtnTransform: {fileID: 0}
   clearTimeText: {fileID: 798703697}
   usedBombText: {fileID: 1405918980}
 --- !u!224 &1792084575
