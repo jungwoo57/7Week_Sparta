@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -85,10 +85,10 @@ public class StageSelectPanel : MonoBehaviour
         else requiredButtonCount = 12;
 
         int startIndex = (pageNumber - 1) * 12;
-        for (int i = startIndex; i < startIndex + requiredButtonCount; i++)
+        /*for (int i = startIndex; i < startIndex + requiredButtonCount; i++)
         {
             Stage stage = stageManager.stages[i];
-            SaveData saveData = saveLoadManager.saveDataList[i];
+            StageData saveData = saveLoadManager.saveDataList[i];
             StageSelectButton button = Instantiate(stageSelectButtonPrefab, contentBox.transform)
                 .GetComponent<StageSelectButton>();
             button.Init(saveData);
@@ -97,7 +97,7 @@ public class StageSelectPanel : MonoBehaviour
             // 렌더링 리프레시 (안 열린 스테이지 찰나 활성화된 상태로 보이는 것  방지)
             button.gameObject.SetActive(false);
             button.gameObject.SetActive(true);
-        }
+        }*/
     }
 
     public void OnClickBackButton()

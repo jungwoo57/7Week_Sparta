@@ -33,7 +33,7 @@ public class TestStage : MonoBehaviour
     {
         StageState = state;
     }
-
+/*
     public SaveData ToSaveData()
     {
         return new SaveData { id = _id, stageState = _stageState };
@@ -42,7 +42,7 @@ public class TestStage : MonoBehaviour
     public void LoadFromSaveData(SaveData data)
     {
         StageState = data.stageState;
-    }
+    }*/
     void SetStage()
     {
         player.transform.position = PlayerStartPosition;

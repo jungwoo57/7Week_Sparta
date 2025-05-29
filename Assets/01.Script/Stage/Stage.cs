@@ -1,24 +1,7 @@
-using UnityEngine;
-
-public enum StageState
-{
-    Locked,
-    Open,
-    Cleared
-}
+﻿using UnityEngine;
 
 public class Stage : MonoBehaviour
 {
-    [Header("saveData")]
-    [SerializeField]private int _id;
-    public int Id => _id;
-    [SerializeField] private StageState _stageState;
-    public StageState StageState
-    {
-        get => _stageState;
-        set => _stageState = value;
-    }
-
     [Header("MapData")]
     [SerializeField] private int _bombCount;
     [SerializeField] private Vector3 playerStartPosition;
@@ -26,19 +9,4 @@ public class Stage : MonoBehaviour
     [SerializeField] private Vector3 destination;
     public Vector3 Destination => destination;
 
-    public void SetIdForProto(int id) => _id = id;
-    public void SetState(StageState state)
-    {
-        StageState = state;
-    }
-
-    public SaveData ToSaveData()
-    {
-        return new SaveData { id = _id, stageState = _stageState };
-    }
-
-    public void LoadFromSaveData(SaveData data)
-    {
-        StageState = data.stageState;
-    }
 }
