@@ -49,7 +49,7 @@ public class GameClearPanel : MonoBehaviour
 
         AnimateUI();
         
-        SetClearTimeText(stageManager.ElapsedTime);
+        // SetClearTimeText(stageManager.ElapsedTime);
         SetBombCountText(0);
     }
 
@@ -87,12 +87,13 @@ public class GameClearPanel : MonoBehaviour
         Debug.Log("스테이지 ID 기반 작동입니다. 기능이 완료되면 나중에 로그 지워주세요");
 
         int curStageId = stageManager.curStageId;
-        stageManager.LoadStage(curStageId + 1);
+        //stageManager.LoadStage(curStageId + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void OnClickRetryButton()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        stageManager.LoadStage(stageManager.curStageId);
+        //stageManager.LoadStage(stageManager.curStageId);
     }
 }

@@ -9,7 +9,7 @@ public class GoalLocation : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameManager.Instance.StageManager.ClearStage();
+            //GameManager.Instance.StageManager.ClearStage();
         }
     }
 }

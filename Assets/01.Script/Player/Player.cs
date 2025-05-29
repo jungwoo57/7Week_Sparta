@@ -54,7 +54,6 @@ public class Player : MonoBehaviour, IAffected
         spawnBomb.transform.position = bombSpawnPos.position;
         spawnBomb.AddComponent<Rigidbody>();
         spawnBomb.AddComponent<BombAction>();
-        GameManager.Instance.StageManager.usedBombCount++;
         anim.SetTrigger("SpawnBomb");
     }
 
