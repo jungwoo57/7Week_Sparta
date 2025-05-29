@@ -21,7 +21,7 @@ public class StageManager : MonoBehaviour
 {
     public const int stageCount = 3;
     public List<StageData> stageDataList = new List<StageData>();
-    public int curStageIndex;
+    public int curStageId;
 
     //Player player;
 
@@ -59,31 +59,57 @@ public class StageManager : MonoBehaviour
         stageDataList = GameManager.Instance.SaveLoadManager.LoadData(stageDataList);
     }
 
-    public void LoadStage(int stageId)
+    // StageManager에서만 사용하는 메서드. stageId로 씬을 불러오는 메서드.
+    private void LoadStage(int stageId)
     {
-        // ReStart 버튼으로 스테이지 정보 초기화
-        curStageIndex = stageId;
+        curStageId = stageId;
 
-        SceneManager.LoadScene($"Stage{curStageIndex}");
-
-        // player.transform = curStage.PlayerStartPosition;
-        // camera.transform = _curStage.CameraStartPosition;
+        SceneManager.LoadScene($"Stage{curStageId}");
     }
 
-    private void CheckClearCondition()
+    public void Restart()
     {
-        // 플레이어의 위치 체크
-        // 만약 플레이어의 위치가 curStage.Destination과 일정 거리 사이라면
-        // ClaerStage() 호출
+        LoadStage(curStageId);
     }
 
-    private void ClearStage()
+    public void ClearStage()
     {
-        // 현재 스테이지의 State를 Cleared로 바꾸고, 다음 스테이지를 Open한다.
-        //stages[curStage.Id].SetState(StageState.Cleared);
-        //stages[curStage.Id + 1].SetState(StageState.Open);
+        // 현재 스테이지의 State를 Cleared로 변경하고, 
+        for (int i = 0; i < stageDataList.Count; i++)
+        {
+            if (stageDataList[i].id == curStageId)
+            {
+                StageData updatedData = stageDataList[i];
+                updatedData.stageState = StageState.Cleared;
+                stageDataList[i] = updatedData;
+                break;
+            }
+        }
 
-        // 다음 스테이지를 로드
-        //LoadStage(curStage.Id + 1);
+        // 다음 스테이지가 존재하면 Open 상태로 변경
+        int nextStageId = curStageId + 1;
+        if (nextStageId < stageDataList.Count)
+        {
+            for (int i = 0; i < stageDataList.Count; i++)
+            {
+                if (stageDataList[i].id == nextStageId)
+                {
+                    StageData updatedData = stageDataList[i];
+                    updatedData.stageState = StageState.Open;
+                    stageDataList[i] = updatedData;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("마지막 스테이지입니다.");
+        }
+
+        // 변경된 데이터 저장
+        SaveStageData();
+
+        // 현재 스테이지 다시 로드 (재시작)
+        LoadStage(curStageId);
     }
 }
