@@ -14,12 +14,12 @@ public class BombAction : MonoBehaviour
     [SerializeField] private float force;
     [SerializeField] private BombType bombType;
 
-    public ParticleSystem particleSystem;
+    public ParticleSystem ps;
 
     private void Awake()
     {
         _collider = this.gameObject.GetComponent<BoxCollider>();
-        particleSystem = GetComponentInChildren<ParticleSystem>();
+        ps = GetComponentInChildren<ParticleSystem>();
     }
 
     private void Start()
@@ -70,9 +70,9 @@ public class BombAction : MonoBehaviour
 
     void PlayEffect()
     {
-        if(particleSystem != null)
+        if(ps != null)
         {
-            particleSystem.Play();
+            ps.Play();
         }
     }
 }

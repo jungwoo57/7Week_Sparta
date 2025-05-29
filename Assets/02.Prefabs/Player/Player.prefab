@@ -517,6 +517,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 59763c0e-d450-4e54-976d-f05577905078
     m_ActionName: Player/SwapBomb4
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5772640464990670756}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: KeyDownEsc
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0412f070-0074-4bb0-801f-a6bb33b9279b
+    m_ActionName: Player/ESC[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -534,8 +550,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b180afd5e267f147a1358f3733e27c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  jumpPower: 5
+  moveSpeed: 7
+  jumpPower: 10
   cameraSensitive: 1
   maxCameraAngle: 85
   minCameraAngle: -85

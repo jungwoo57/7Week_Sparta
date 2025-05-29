@@ -165,6 +165,7 @@ public class PlayerController : MonoBehaviour
 
     public void KeyDownEsc(InputAction.CallbackContext context)
     {
+        if (Stage.Instance.IsCleared) return;
         if (context.phase == InputActionPhase.Started)
         {
             if (Stage.Instance.IsPaused)
