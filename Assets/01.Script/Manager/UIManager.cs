@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        //GameManager.Instance.StageManager.uiManager = this;
+        Stage.Instance.uiManager = this;
         gameClearPanel.gameObject.SetActive(false);
     }
 
@@ -36,6 +36,8 @@ public class UIManager : MonoBehaviour
 
   
     
+    // 게임 실패가 있을 시 그 UI에서도 사용하기 위해 여기에 둡니다
+    // 재시작 액션도 저 UI가 필요하면 여기로 옮기겠습니다
     public void OnClickQuit()
     {
         SceneManager.LoadScene("Seunghwa_TitleScene");

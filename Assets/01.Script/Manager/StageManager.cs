@@ -45,35 +45,12 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    public void SaveStageData()
-    {
-        GameManager.Instance.SaveLoadManager.SaveData(stageDataList);
-    }
-
-    public void LoadStageData()
-    {
-        stageDataList = GameManager.Instance.SaveLoadManager.LoadData(stageDataList);
-    }
-
-    // StageManager에서만 사용하는 메서드. stageId로 씬을 불러오는 메서드.
-    private void LoadStage(int stageId)
-    {
-        curStageId = stageId;
-
-        SceneManager.LoadScene($"Stage{curStageId}");
-    }
-
-    public void Restart()
-    {
-        LoadStage(curStageId);
-    }
-
-    public void NextStage()
+    public void SaveStageClearedData()
     {
         // 현재 스테이지의 State를 Cleared로 변경하고, 
         for (int i = 0; i < stageDataList.Count; i++)
         {
-            if (stageDataList[i].id == curStageId)
+            if (stageDataList[i].id == curStageId-1)
             {
                 StageData updatedData = stageDataList[i];
                 updatedData.stageState = StageState.Cleared;
@@ -81,7 +58,7 @@ public class StageManager : MonoBehaviour
                 break;
             }
         }
-        int nextStageId = curStageId + 1;
+        int nextStageId = curStageId;
         if (nextStageId < stageDataList.Count)
         {
             for (int i = 0; i < stageDataList.Count; i++)
@@ -99,7 +76,29 @@ public class StageManager : MonoBehaviour
         {
             Debug.Log("마지막 스테이지입니다.");
         }
-        SaveStageData();
+        
+        GameManager.Instance.SaveLoadManager.SaveData(stageDataList);
+    }
+
+    public void LoadStageData()
+    {
+        stageDataList = GameManager.Instance.SaveLoadManager.LoadData(stageDataList);
+    }
+
+    // StageManager에서만 사용하는 메서드. stageId로 씬을 불러오는 메서드.
+    public void LoadStage(int stageId)
+    {
+        curStageId = stageId;
+        SceneManager.LoadScene($"Stage{curStageId}");
+    }
+
+    public void Restart()
+    {
         LoadStage(curStageId);
+    }
+
+    public void NextStage()
+    {
+        LoadStage(curStageId + 1);
     }    
 }

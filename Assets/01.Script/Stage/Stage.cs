@@ -11,7 +11,7 @@ public class Stage : MonoBehaviour
     [SerializeField] private Vector3 destination;
     public Vector3 Destination => destination;
 
-    private UIManager uiManager;
+    public UIManager uiManager;
     private Player player;
 
     public float ElapsedTime { get; private set; }
@@ -47,8 +47,6 @@ public class Stage : MonoBehaviour
         {
             ElapsedTime += Time.deltaTime;
         }
-
-        CheckPlayerPosition();
     }
 
     public void InitStage()
@@ -59,6 +57,7 @@ public class Stage : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    [ContextMenu("Clear Stage")]
     public void ClearStage()
     {
         IsCleared = true;
@@ -68,15 +67,7 @@ public class Stage : MonoBehaviour
         // ShowGameClearPanel에 파라미터를 추가하거나 해도 좋을 것 같습니다
         // 사용 폭탄 갯수 플레이어 말고 스테이지 매니저가 들고 있는 것도 좋을 것 같아요
         // 경과 시간은 Update에도 적혀있는 ElapsedTime 참고
-        
+        GameManager.Instance.StageManager.SaveStageClearedData();
         uiManager.ShowGameClearPanel();
-    }
-
-    private void CheckPlayerPosition()
-    {
-        if (player.gameObject.transform.position == destination)
-        {
-            ClearStage();
-        }
     }
 }

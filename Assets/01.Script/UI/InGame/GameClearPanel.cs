@@ -2,9 +2,11 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameClearPanel : MonoBehaviour
 {
@@ -47,6 +49,11 @@ public class GameClearPanel : MonoBehaviour
             stageManager = GameManager.Instance.StageManager;
         }
 
+        if (stageManager.curStageId == StageManager.stageCount)
+        {
+            nextStageBtnTransform.GetComponent<Button>().interactable = false;
+            nextStageBtnTransform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 120);
+        }
         AnimateUI();
         
         // SetClearTimeText(stageManager.ElapsedTime);
@@ -64,8 +71,8 @@ public class GameClearPanel : MonoBehaviour
         quitBtnTransform.anchoredPosition = quitBtnPos - new Vector2(0,50);
         
         restartBtnTransform.DOAnchorPos(restartBtnPos, 0.6f).SetEase(Ease.OutQuad).SetDelay(0.2f);
-        nextStageBtnTransform.DOAnchorPos(nextStageBtnPos, 0.6f).SetEase(Ease.OutQuad);
-        quitBtnTransform.DOAnchorPos(quitBtnPos, 0.6f).SetEase(Ease.OutQuad);
+        nextStageBtnTransform.DOAnchorPos(nextStageBtnPos, 0.6f).SetEase(Ease.OutQuad).SetDelay(0.3f);
+        quitBtnTransform.DOAnchorPos(quitBtnPos, 0.6f).SetEase(Ease.OutQuad).SetDelay(0.4f);
     }
 
     public void SetClearTimeText(float elapsedTime)
@@ -84,16 +91,21 @@ public class GameClearPanel : MonoBehaviour
 
     public void OnClickNextStage()
     {
-        Debug.Log("스테이지 ID 기반 작동입니다. 기능이 완료되면 나중에 로그 지워주세요");
-
-        int curStageId = stageManager.curStageId;
-        //stageManager.LoadStage(curStageId + 1);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        stageManager.NextStage();
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void OnClickRetryButton()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        //stageManager.LoadStage(stageManager.curStageId);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        stageManager.Restart();
+    }
+
+    public void OnDisable()
+    {
+        DOTween.Kill(titleTransform);
+        DOTween.Kill(restartBtnTransform);
+        DOTween.Kill(nextStageBtnTransform);
+        DOTween.Kill(quitBtnTransform);
     }
 }
