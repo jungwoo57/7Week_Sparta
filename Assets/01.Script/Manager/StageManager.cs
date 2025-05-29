@@ -1,13 +1,32 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public enum StageState
+{
+    Locked,
+    Open,
+    Cleared
+}
+
+[Serializable]
+public struct StageData
+{
+    public int id;
+    public StageState stageState;
+}
 
 public class StageManager : MonoBehaviour
 {
-    public Stage curStage;
-    public List<Stage> stages = new List<Stage>();
+
     public UIManager uiManager;
     public int usedBombCount;
+
+    public const int stageCount = 3;
+    public List<StageData> stageDataList = new List<StageData>();
+    public int curStageId;
+
     //Player player;
 
     public float ElapsedTime { get; private set; }
@@ -16,24 +35,20 @@ public class StageManager : MonoBehaviour
     private void Awake()
     {
         IsCleared = false;
-        SetStageProto();
     }
 
-    private void SetStageProto()
-    {
-        for (int i = 0; i < GameManager.AllStageCount; i++)
-        {
-            Stage stage = new();
-            stage.SetIdForProto(i);
-            stages.Add(stage);
-        }
-    }
 
     private void Start()
     {
-        //SetStages();
-        //GameManager.Instance.SaveLoadManager.SaveData(stages);
-        //UpdateStageStates();
+        NewStageData();
+    }
+
+    private void Update()
+    {
+        if (!IsCleared)
+        {
+            ElapsedTime += Time.deltaTime;
+        }
     }
 
     public void InitStage()
@@ -44,13 +59,6 @@ public class StageManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void Update()
-    {
-        if (!IsCleared)
-        {
-            ElapsedTime += Time.deltaTime;
-        }
-    }
 
     public void ClearStage()
     {
@@ -64,67 +72,81 @@ public class StageManager : MonoBehaviour
         
         uiManager.ShowGameClearPanel();
     }
-
-    private void SetStages()
+    public void NewStageData()
     {
-        GameObject stageParent = GameObject.Find("Stage");
-        if (stageParent == null)
-        {
-            Debug.LogError("Stage is missing!");
-            return;
-        }
+        stageDataList.Clear();
 
-        for (int i = 0; i < stageParent.transform.childCount; i++)
-        {
-            Transform child = stageParent.transform.GetChild(i);
-            Stage stageComponent = child.GetComponent<Stage>();
 
-            if (stageComponent != null)
+        for (int i = 0; i < stageCount; i++)
+        {
+            StageState state = (i == 0) ? StageState.Open : StageState.Locked;
+
+            StageData stageData = new StageData
             {
-                //stages.Add(stageComponent);
-            }
-            else
-            {
-                Debug.LogError("Stage component is missing!");
-            }
+                id = i,
+                stageState = state
+            };
+            stageDataList.Add(stageData);
         }
     }
 
-    public void UpdateStageStates()
+    public void SaveStageData()
     {
-        var loadedList = GameManager.Instance.SaveLoadManager.saveDataList;
-
-        foreach (var data in loadedList)
-        {
-            //Stage stage = stages.Find(s => s.Id == data.id);
-            //if (stage != null)
-            //{
-            //    stage.LoadFromSaveData(data);
-            //}
-            // else
-            // {
-            //     Debug.LogWarning($"ID {data.id}에 해당하는 Stage를 찾을 수 없습니다.");
-            // }
-        }
+        GameManager.Instance.SaveLoadManager.SaveData(stageDataList);
     }
 
-    public void LoadStage(int stageId)
+    public void LoadStageData()
     {
-        // ReStart 버튼으로 스테이지 정보 초기화
-        //curStage = stages[stageId];
+        stageDataList = GameManager.Instance.SaveLoadManager.LoadData(stageDataList);
+    }
 
-        //player.transform = curStage.PlayerStartPosition;
-        // camera.transform = _curStage.CameraStartPosition;
+    // StageManager에서만 사용하는 메서드. stageId로 씬을 불러오는 메서드.
+    private void LoadStage(int stageId)
+    {
+        curStageId = stageId;
+
+        SceneManager.LoadScene($"Stage{curStageId}");
+    }
+
+    public void Restart()
+    {
+        LoadStage(curStageId);
+    }
+
+    public void NextStage()
+    {
+        // 현재 스테이지의 State를 Cleared로 변경하고, 
+        for (int i = 0; i < stageDataList.Count; i++)
+        {
+            if (stageDataList[i].id == curStageId)
+            {
+                StageData updatedData = stageDataList[i];
+                updatedData.stageState = StageState.Cleared;
+                stageDataList[i] = updatedData;
+                break;
+            }
+        }
+        int nextStageId = curStageId + 1;
+        if (nextStageId < stageDataList.Count)
+        {
+            for (int i = 0; i < stageDataList.Count; i++)
+            {
+                if (stageDataList[i].id == nextStageId)
+                {
+                    StageData updatedData = stageDataList[i];
+                    updatedData.stageState = StageState.Open;
+                    stageDataList[i] = updatedData;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("마지막 스테이지입니다.");
+        }
+        SaveStageData();
+        LoadStage(curStageId);
     }
 
     
-    private void ClearStageLegacy()
-    {
-        // 현재 스테이지의 State를 Cleared로 바꾸고, 다음 스테이지를 Open한다.
-        //stages[curStage.Id].SetState(StageState.Cleared);
-        //stages[curStage.Id + 1].SetState(StageState.Open);
-
-        // 다음 스테이지를 로드
-        LoadStage(curStage.Id + 1);
-    }
 }
