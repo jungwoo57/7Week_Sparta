@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [Serializable]
@@ -33,6 +34,7 @@ public class SaveLoadManager : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("세이브로드 매니저 초기화 진행");
         DeleteData();
         LoadData();
     }
@@ -81,8 +83,13 @@ public class SaveLoadManager : MonoBehaviour
                 data.id = i;
                 saveData.Add(data);
             }
+            
             string json = JsonUtility.ToJson(new SaveDataWrapper(saveData));
             File.WriteAllText(path, json);
+
+            saveDataList = saveData;
+            
+            Debug.Log("Length - " + saveDataList.Count);
             //return new List<SaveData>();
         }
 

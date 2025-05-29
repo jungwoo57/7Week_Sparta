@@ -23,10 +23,12 @@ public class StageManager : MonoBehaviour
     {
         for (int i = 0; i < GameManager.AllStageCount; i++)
         {
-            Stage stage = new();
+            Stage stage = new Stage();
             stage.SetIdForProto(i);
             stages.Add(stage);
         }
+
+        Debug.Log("프로토 스테이지 셋팅 완료");
     }
 
     private void Start()
@@ -36,8 +38,15 @@ public class StageManager : MonoBehaviour
         //UpdateStageStates();
     }
 
-    public void InitStage()
+    public void InitStage(int stageId)
     {
+        curStage = stages.Find(stage => stage.Id == stageId);
+        if (curStage == null)
+        {
+            Debug.Log("스테이지를 찾을 수 없음 || " + stages[0].Id + " || " + stageId);
+            Debug.Log(stages[0].Id == stageId);
+        }
+
         usedBombCount = 0;
         ElapsedTime = 0;
         IsCleared = false;
@@ -56,12 +65,16 @@ public class StageManager : MonoBehaviour
     {
         IsCleared = true;
         Cursor.lockState = CursorLockMode.None;
-        
+
+
         // TODO : 클리어 시간과 사용 폭탄 수 uiManager에 셋팅
         // ShowGameClearPanel에 파라미터를 추가하거나 해도 좋을 것 같습니다
         // 사용 폭탄 갯수 플레이어 말고 스테이지 매니저가 들고 있는 것도 좋을 것 같아요
         // 경과 시간은 Update에도 적혀있는 ElapsedTime 참고
-        
+
+        // stages[curStage.Id].SetState(StageState.Cleared);
+        // stages[curStage.Id + 1].SetState(StageState.Open);
+        // GameManager.Instance.SaveLoadManager.SaveData(stages);
         uiManager.ShowGameClearPanel();
     }
 
@@ -117,7 +130,7 @@ public class StageManager : MonoBehaviour
         // camera.transform = _curStage.CameraStartPosition;
     }
 
-    
+
     private void ClearStageLegacy()
     {
         // 현재 스테이지의 State를 Cleared로 바꾸고, 다음 스테이지를 Open한다.

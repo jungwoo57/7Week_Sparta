@@ -24,12 +24,12 @@ public class StageSelectButton : MonoBehaviour
         buttonComponent = GetComponent<Button>();
     }
 
-    public void Init(SaveData _saveData)
+    public void Init(SaveData saveData)
     {
+        id = saveData.id;
+        buttonText.text = "Stage " + (saveData.id + 1);
         
-        buttonText.text = "Stage " + _saveData.id;
-        
-        if(_saveData.stageState == StageState.Locked)
+        if(saveData.stageState == StageState.Locked)
             buttonComponent.interactable = false;
         buttonComponent.onClick.AddListener(OnClick);
     }
@@ -46,7 +46,7 @@ public class StageSelectButton : MonoBehaviour
     public void OnClick()
     {
         SceneManager.LoadScene("Seunghwa_JWPlayerCopy_InGameUI");
-        GameManager.Instance.StageManager.InitStage();
+        GameManager.Instance.StageManager.InitStage(id);
     }
 }
 

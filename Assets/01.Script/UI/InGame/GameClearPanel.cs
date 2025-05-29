@@ -7,8 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class GameClearPanel : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI clearTimeText;
-    [SerializeField] TextMeshProUGUI usedBombText;
+    [SerializeField]
+    TextMeshProUGUI clearTimeText;
+    [SerializeField]
+    TextMeshProUGUI usedBombText;
 
     StageManager stageManager;
 
@@ -18,6 +20,7 @@ public class GameClearPanel : MonoBehaviour
         {
             stageManager = GameManager.Instance.StageManager;
         }
+
         SetClearTimeText(stageManager.ElapsedTime);
         SetBombCountText(0);
     }
@@ -35,16 +38,19 @@ public class GameClearPanel : MonoBehaviour
     {
         usedBombText.text = count + " 개";
     }
-        
+
     public void OnClickNextStage()
     {
         Debug.Log("스테이지 ID 기반 작동입니다. 기능이 완료되면 나중에 로그 지워주세요");
-        int stageID = stageManager.curStage.Id;
-        SceneManager.LoadScene($"Stage{stageID}");
+
+        int curStageId = stageManager.curStage.Id;
+        SceneManager.LoadScene($"Stage{curStageId + 1}");
+        stageManager.InitStage(curStageId + 1);
     }
 
     public void OnClickRetryButton()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        stageManager.InitStage(stageManager.curStage.Id);
     }
 }
