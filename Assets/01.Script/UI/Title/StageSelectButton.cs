@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using TMPro;
 using UnityEngine;
@@ -33,6 +33,7 @@ public class StageSelectButton : MonoBehaviour
             buttonComponent.interactable = false;
         buttonComponent.onClick.AddListener(OnClick);
     }
+    
 
     // public void Init(int _id)
     // {
