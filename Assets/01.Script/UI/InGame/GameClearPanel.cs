@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameClearPanel : MonoBehaviour
 {
@@ -37,6 +38,13 @@ public class GameClearPanel : MonoBehaviour
         
     public void OnClickNextStage()
     {
-        
+        Debug.Log("스테이지 ID 기반 작동입니다. 기능이 완료되면 나중에 로그 지워주세요");
+        int stageID = stageManager.curStage.Id;
+        SceneManager.LoadScene($"Stage{stageID}");
+    }
+
+    public void OnClickRetryButton()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
