@@ -2778,6 +2778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameClearPanel: {fileID: 1540709178}
+  pausePanel: {fileID: 0}
 --- !u!4 &530666468
 Transform:
   m_ObjectHideFlags: 0
