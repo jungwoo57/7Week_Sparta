@@ -1,13 +1,17 @@
-
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public PlayerUI playerUI;
     public GameClearPanel gameClearPanel;
     public PausePanel pausePanel;
+
+    [SerializeField]
+    private Fade fadeSquare;
     
     StageManager stageManager;
     private void Start()
@@ -15,6 +19,7 @@ public class UIManager : MonoBehaviour
         stageManager = GameManager.Instance.StageManager;
         gameClearPanel.gameObject.SetActive(false);
         pausePanel.gameObject.SetActive(false);
+        fadeSquare.FadeIn();
     }
 
     public void ShowGameClearPanel()
@@ -34,8 +39,8 @@ public class UIManager : MonoBehaviour
 
     public void OnClickRetryButton()
     {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        stageManager.Restart();
+        StartCoroutine(AfterFadeOut(stageManager.Restart));
+        
     }
     
     // 게임 실패가 있을 시 그 UI에서도 사용하기 위해 여기에 둡니다
@@ -43,11 +48,26 @@ public class UIManager : MonoBehaviour
    
     public void OnClickQuit()
     {
-        SceneManager.LoadScene("TitleScene");
+        StartCoroutine(AfterFadeOut(() => SceneManager.LoadScene("TitleScene")));
     }
 
     #endregion
 
+    public void FadeIn()
+    {
+        fadeSquare.FadeIn();
+    }
 
+    public void FadeOut()
+    {
+        fadeSquare.FadeOut();
+    }
+
+    IEnumerator AfterFadeOut(Action action)
+    {
+        FadeOut();
+        yield return new WaitForSeconds(1f);
+        action?.Invoke();
+    }
   
 }
