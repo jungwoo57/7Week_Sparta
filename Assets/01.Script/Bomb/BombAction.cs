@@ -1,19 +1,23 @@
 ﻿
 using _01.Script.Audio;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Debug = UnityEngine.Debug;
 
 public class BombAction : MonoBehaviour
 {
     private Collider _collider;
     private BombStatus _status;
+    private Rigidbody _rigid;
     protected BombBase _data;
     //ScriptableObject에서 불러올 것들
     [SerializeField] private float radius;
     [SerializeField] private float force;
     [SerializeField] private BombType bombType;
 
+    List<IAffected> reactabless = new();
     public ParticleSystem ps;
 
     private void Awake()
@@ -30,16 +34,22 @@ public class BombAction : MonoBehaviour
     }
     public IEnumerator Explode()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _data.explodeRange);
         yield return new WaitForSeconds(_data.explodeTime);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _data.explodeRange);  
         foreach (Collider hit in colliders)
         {
+            reactabless.Clear();
             IAffected[] reactables = hit.GetComponents<IAffected>();
-            if(reactables == null) { Debug.Log("error"); }
-            foreach (var reactable in reactables)
+            if (reactables.Length == 0) 
+            { 
+            }
+            else
             {
-                reactable.OnAffected(transform.position, _data.explodePower, _data.explodeRange, _data.bombType);
-                //reactable.OnAffected(transform.position, force, radius, bombType);
+                foreach (var reactable in reactables)
+                {
+                    reactable.OnAffected(transform.position, _data.explodePower, _data.explodeRange, _data.bombType);
+                    //reactable.OnAffected(transform.position, force, radius, bombType);
+                }
             }
         }
         AudioManager.Instance.PlaySFX(SoundType.Explosion);
@@ -48,11 +58,13 @@ public class BombAction : MonoBehaviour
         {
             
             _collider.enabled = false;
+            _rigid.useGravity = false;
             transform.localScale = Vector3.Lerp(Vector3.one * _data.explodeRange, Vector3.zero, time);
             time += Time.deltaTime;
-            AudioManager.Instance.PlaySFX(SoundType.Explosion);
+            //AudioManager.Instance.PlaySFX(SoundType.Explosion);
             yield return null;
         }
+        Destroy(gameObject);
 
     }
 
@@ -60,6 +72,7 @@ public class BombAction : MonoBehaviour
     {
         _status = this.gameObject.GetComponent<BombStatus>();
         _data = _status.data;
+        _rigid = GetComponent<Rigidbody>();
     }
     
     void OnDrawGizmos()
@@ -74,5 +87,11 @@ public class BombAction : MonoBehaviour
         {
             ps.Play();
         }
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _data.explodeRange); // 에디터에서도 항상 보임
+        
     }
 }
