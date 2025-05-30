@@ -7,6 +7,7 @@ TagManager:
   - CinemachineTarget
   - Enemy
   - Destroyable
+  - Cube
   layers:
   - Default
   - TransparentFX
