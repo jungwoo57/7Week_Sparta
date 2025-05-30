@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/00.Scenes/Seunghwa_TitleScene.unity
+    path: Assets/00.Scenes/TitleScene.unity
     guid: 72b199028b3b93b47991c46422f1a071
   - enabled: 1
-    path: Assets/00.Scenes/Seunghwa_JWPlayerCopy_InGameUI.unity
+    path: Assets/00.Scenes/Legacy/Seunghwa_JWPlayerCopy_InGameUI.unity
     guid: 1f48c55b97ad1e842aa582f584c55f85
   - enabled: 1
     path: Assets/00.Scenes/Stage/Stage3.unity
