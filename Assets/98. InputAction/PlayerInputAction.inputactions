@@ -87,6 +87,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "SwapBomb5",
+                    "type": "Button",
+                    "id": "b1a0294e-7544-496a-8be4-0f220478b31b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ESC",
                     "type": "Button",
                     "id": "0412f070-0074-4bb0-801f-a6bb33b9279b",
@@ -292,6 +301,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ESC",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0a6ed185-5a3c-4e53-a296-6dd206d64207",
+                    "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwapBomb5",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

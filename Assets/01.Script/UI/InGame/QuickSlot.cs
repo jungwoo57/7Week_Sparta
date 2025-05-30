@@ -37,4 +37,9 @@ public class QuickSlot : MonoBehaviour
         
         focusedIndex = x;
     }
+
+    public void SetItemSprite(Sprite sprite, int slotIndex)
+    {
+        itemSlots[slotIndex-1].SetSprite(sprite);    
+    }
 }

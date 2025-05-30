@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour
    
     public void OnClickQuit()
     {
-        SceneManager.LoadScene("Seunghwa_TitleScene");
+        SceneManager.LoadScene("TitleScene");
     }
 
     #endregion

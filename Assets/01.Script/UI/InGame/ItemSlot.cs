@@ -9,15 +9,15 @@ public enum ItemType
     Stackable,
     Distinct
 }
-public class TestItemData
-{
-    public string name;
-    public ItemType itemType;
-    public Sprite sprite;
-}
+// public class TestItemData
+// {
+//     public string name;
+//     public ItemType itemType;
+//     public Sprite sprite;
+// }
 public class ItemSlot : MonoBehaviour
 {
-    private TestItemData item;
+    //private TestItemData item;
     [SerializeField] Image itemIcon;
     [SerializeField] Image coolDownIndicator;
     [SerializeField] TextMeshProUGUI itemCountText;
@@ -34,18 +34,23 @@ public class ItemSlot : MonoBehaviour
         EmptySlot();
     }
     
-    public void SetItem(TestItemData _item)
-    {
-        item = _item;
-        itemIcon.sprite = _item.sprite;
-        if (item.itemType == ItemType.Stackable)
-        {
-            itemCountText.gameObject.SetActive(true);
-            itemCount = 0;
-            itemCountText.text = itemCount.ToString();
-        }
-    }
+    // public void SetItem(TestItemData _item)
+    // {
+    //     item = _item;
+    //     itemIcon.sprite = _item.sprite;
+    //     if (item.itemType == ItemType.Stackable)
+    //     {
+    //         itemCountText.gameObject.SetActive(true);
+    //         itemCount = 0;
+    //         itemCountText.text = itemCount.ToString();
+    //     }
+    // }
 
+    public void SetSprite(Sprite sprite)
+    {
+        itemIcon.sprite = sprite;
+        itemIcon.gameObject.SetActive(true);
+    }
     public void AddItemCount()
     {
         itemCount++;
@@ -59,7 +64,7 @@ public class ItemSlot : MonoBehaviour
     
     private void EmptySlot()
     {
-        item = null;
+        //item = null;
         itemIcon.sprite = null;
         itemCountText.gameObject.SetActive(false);
         coolDownIndicator.fillAmount = 0;
