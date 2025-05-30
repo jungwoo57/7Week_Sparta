@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+    public PlayerUI playerUI;
     public GameClearPanel gameClearPanel;
     public PausePanel pausePanel;
     
@@ -12,7 +13,6 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         stageManager = GameManager.Instance.StageManager;
-        Stage.Instance.uiManager = this;
         gameClearPanel.gameObject.SetActive(false);
         pausePanel.gameObject.SetActive(false);
     }

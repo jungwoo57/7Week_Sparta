@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,15 +18,24 @@ public class Player : MonoBehaviour, IAffected
     public GameObject curBomb;
     public BombBase curBombData;
     public PlayerManager playerManager;
+    PlayerUI playerUI;
 
     public float coolTime = 0;
     private Animator anim;
     private Rigidbody rigid;
+    
     private void Awake()
     {
         controller = GetComponent<PlayerController>();
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
+        useBombCount = 0;
+        maxBombIndex = bomb.Length -1 ;
+        curBombIndex = 0;
+
+        curBombData = bomb[curBombIndex];
+        curBomb = Instantiate(bomb[curBombIndex].equipPrefab, bombPos);
+        curBomb.transform.position = bombPos.position;
     }
 
     private void Start()
@@ -50,13 +60,8 @@ public class Player : MonoBehaviour, IAffected
             playerManager.Player = this;
         }
 
-        useBombCount = 0;
-        maxBombIndex = bomb.Length -1 ;
-        curBombIndex = 0;
-
-        curBombData = bomb[curBombIndex];
-        curBomb = Instantiate(bomb[curBombIndex].equipPrefab, bombPos);
-        curBomb.transform.position = bombPos.position;
+     
+        playerUI = Stage.Instance.uiManager.playerUI;
     }
     public void SpawnBomb()
     {
@@ -67,11 +72,14 @@ public class Player : MonoBehaviour, IAffected
         spawnBomb.AddComponent<BombAction>();
         anim.SetTrigger("SpawnBomb");
         coolTime = bomb[curBombIndex].bombCooldown;
+        Stage.Instance.usedBombCount++;
+        Stage.Instance.uiManager.playerUI.UIUpdate();
     }
 
 
     public void SwapBomb(int index)
     {
+        playerUI.quickSlot.FocusSlot(index);
         curBombIndex = index - 1;
         if (curBombIndex >= maxBombIndex)
         {
@@ -85,6 +93,7 @@ public class Player : MonoBehaviour, IAffected
         curBombData = bomb[curBombIndex];
         curBomb = Instantiate(bomb[curBombIndex].equipPrefab, bombPos);
         curBomb.transform.position = bombPos.position;
+        Stage.Instance.uiManager.playerUI.UIUpdate();
     }
 
     public void OnAffected(Vector3 pos, float force, float radius, BombType type) 

@@ -297,7 +297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &174671587
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1653,9 +1653,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1291433661}
-  bombCount: {fileID: 1868761363}
+  bombCountText: {fileID: 1868761363}
+  quickSlot: {fileID: 115471640}
   bombName: {fileID: 1661940614}
-  bombImage: {fileID: 0}
+  bombImage: {fileID: 1969793216}
 --- !u!1 &516413016
 GameObject:
   m_ObjectHideFlags: 0
@@ -2618,7 +2619,7 @@ MonoBehaviour:
   bombCount: 0
   usedBombCount: 0
   destination: {x: 0, y: 0, z: 0}
-  uiManager: {fileID: 0}
+  uiManager: {fileID: 2106585251}
 --- !u!4 &864173785
 Transform:
   m_ObjectHideFlags: 0
@@ -5816,6 +5817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bd10086026ecdd4d8fcf03fe11a9a86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerUI: {fileID: 490280954}
   gameClearPanel: {fileID: 1811991575}
   pausePanel: {fileID: 174671588}
 --- !u!4 &2106585252

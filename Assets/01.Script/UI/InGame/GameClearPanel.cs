@@ -1,11 +1,6 @@
 using DG.Tweening;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameClearPanel : MonoBehaviour
@@ -54,10 +49,12 @@ public class GameClearPanel : MonoBehaviour
             nextStageBtnTransform.GetComponent<Button>().interactable = false;
             nextStageBtnTransform.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(255, 255, 255, 120);
         }
+        SetClearTimeText(Stage.Instance.ElapsedTime);
+        SetBombCountText(Stage.Instance.usedBombCount);
+        
         AnimateUI();
         
-        // SetClearTimeText(stageManager.ElapsedTime);
-        SetBombCountText(0);
+        
     }
 
     private void AnimateUI()
@@ -77,7 +74,7 @@ public class GameClearPanel : MonoBehaviour
 
     public void SetClearTimeText(float elapsedTime)
     {
-        int totalSeconds = Mathf.FloorToInt(elapsedTime / 1000f);
+        int totalSeconds = (int)elapsedTime;
         int minutes = totalSeconds / 60;
         int seconds = totalSeconds % 60;
 

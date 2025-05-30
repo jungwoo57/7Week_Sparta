@@ -7,7 +7,7 @@ public class Stage : MonoBehaviour
 
     [Header("MapData")]
     [SerializeField] private int bombCount; // maxbombCount로 변경
-    [SerializeField] private int usedBombCount; // 현재 폭탄 갯수로 변경
+    public int usedBombCount; // 현재 폭탄 갯수로 변경
     [SerializeField] private Vector3 destination;
     public Vector3 Destination => destination;
 
@@ -47,6 +47,7 @@ public class Stage : MonoBehaviour
         if (!IsCleared)
         {
             ElapsedTime += Time.deltaTime;
+            
         }
     }
 
@@ -57,6 +58,7 @@ public class Stage : MonoBehaviour
         IsCleared = false;
         IsPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
+        uiManager.playerUI.UIUpdate();
     }
 
     [ContextMenu("Clear Stage")]
@@ -70,6 +72,7 @@ public class Stage : MonoBehaviour
         // 사용 폭탄 갯수 플레이어 말고 스테이지 매니저가 들고 있는 것도 좋을 것 같아요
         // 경과 시간은 Update에도 적혀있는 ElapsedTime 참고
         GameManager.Instance.StageManager.SaveStageClearedData();
+       
         uiManager.ShowGameClearPanel();
     }
 
