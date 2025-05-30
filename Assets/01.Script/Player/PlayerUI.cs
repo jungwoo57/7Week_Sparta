@@ -6,22 +6,15 @@ using UnityEngine.UI;
 public class PlayerUI : MonoBehaviour
 {
     public Player player; // �Ŵ��� �ν��Ͻ� �� �ش� �ڵ� �̱��濡�� ��������
-    public TextMeshProUGUI bombCount; // ����� ��ź ����
-
+    public TextMeshProUGUI bombCountText; // ����� ��ź ����
+    public QuickSlot quickSlot;
+    
     public TextMeshProUGUI bombName;
     public Image bombImage;
 
-    private void Awake()
+    public void UIUpdate()
     {
-    }
-
-    private void Update()
-    {
-        UIUpdate();
-    }
-    private void UIUpdate()
-    {
-        bombCount.text = " X " + player.useBombCount.ToString();
+        bombCountText.text = " X " + Stage.Instance.usedBombCount;
         bombName.text = player.curBombData.bombName; // 
     }
 }

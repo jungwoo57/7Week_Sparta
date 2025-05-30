@@ -21,7 +21,7 @@ public class QuickSlot : MonoBehaviour
             itemSlots.Add(slot);
         }
 
-        
+        focusedIndex = 1;
     }
 
     private void Start()
@@ -29,10 +29,12 @@ public class QuickSlot : MonoBehaviour
         itemSlots[0].ToggleOutline();
     }
 
-    private void FocusSlot(int x)
+    public void FocusSlot(int x)
     {
         int index = x - 1;
         itemSlots[focusedIndex-1].ToggleOutline();
         itemSlots[index].ToggleOutline();
+        
+        focusedIndex = x;
     }
 }
