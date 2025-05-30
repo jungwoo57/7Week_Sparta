@@ -39,6 +39,7 @@ public class UIManager : MonoBehaviour
 
     public void OnClickRetryButton()
     {
+        Time.timeScale = 1;
         StartCoroutine(AfterFadeOut(stageManager.Restart));
         
     }
@@ -48,7 +49,9 @@ public class UIManager : MonoBehaviour
    
     public void OnClickQuit()
     {
+        Time.timeScale = 1;
         StartCoroutine(AfterFadeOut(() => SceneManager.LoadScene("TitleScene")));
+        
     }
 
     #endregion
