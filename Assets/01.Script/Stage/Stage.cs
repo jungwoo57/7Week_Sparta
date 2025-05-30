@@ -53,6 +53,7 @@ public class Stage : MonoBehaviour
 
     public void InitStage()
     {
+        Time.timeScale = 1;
         usedBombCount = 0;
         ElapsedTime = 0;
         IsCleared = false;
