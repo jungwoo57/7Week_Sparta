@@ -61,7 +61,7 @@ public class Player : MonoBehaviour, IAffected
         }
      
         playerUI = Stage.Instance.uiManager.playerUI;
-        
+
         for (int i = 0; i < bomb.Length; i++)
         {
             playerUI.quickSlot.SetItemSprite(bomb[i].icon, i+1);

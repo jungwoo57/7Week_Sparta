@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
 public enum StageState
@@ -20,8 +24,12 @@ public struct StageData
 public class StageManager : MonoBehaviour
 {
     public const int stageCount = 3;
+
+    private List<AssetReferenceGameObject> stagePrefabs;
     public List<StageData> stageDataList = new List<StageData>();
     public int curStageId;
+
+    private AsyncOperationHandle<SceneInstance> stageSceneHandle;
 
     private void Start()
     {
@@ -79,17 +87,13 @@ public class StageManager : MonoBehaviour
         
         GameManager.Instance.SaveLoadManager.SaveData(stageDataList);
     }
-
-    public void LoadStageData()
-    {
-        stageDataList = GameManager.Instance.SaveLoadManager.LoadData(stageDataList);
-    }
+    
 
     // StageManager에서만 사용하는 메서드. stageId로 씬을 불러오는 메서드.
     public void LoadStage(int stageId)
     {
         curStageId = stageId;
-        SceneManager.LoadScene($"Stage{curStageId}");
+        stageSceneHandle = Addressables.LoadSceneAsync($"Stage{stageId}");  // 로드씬 모드 싱글
     }
 
     public void Restart()

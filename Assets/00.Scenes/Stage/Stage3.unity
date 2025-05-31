@@ -2972,8 +2972,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bombCount: 0
   usedBombCount: 0
-  destination: {x: 0, y: 0, z: 0}
   uiManager: {fileID: 2106585251}
+  player: {fileID: 1291433661}
 --- !u!4 &864173785
 Transform:
   m_ObjectHideFlags: 0
@@ -5127,7 +5127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1504019725
 RectTransform:
   m_ObjectHideFlags: 0

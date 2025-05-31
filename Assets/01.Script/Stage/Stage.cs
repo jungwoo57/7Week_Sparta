@@ -8,12 +8,9 @@ public class Stage : MonoBehaviour
     [Header("MapData")]
     [SerializeField] private int bombCount; // maxbombCount로 변경
     public int usedBombCount; // 현재 폭탄 갯수로 변경
-    [SerializeField] private Vector3 destination;
-    public Vector3 Destination => destination;
 
     public UIManager uiManager;
-    private Player player;
-
+    public Player player;
     public float ElapsedTime { get; private set; }
     public bool IsCleared { get; private set; }
     public bool IsPaused { get; private set; }
@@ -37,8 +34,6 @@ public class Stage : MonoBehaviour
 
     private void Start()
     {
-        player = GetComponent<Player>();
-
         InitStage();
     }
 
@@ -59,7 +54,20 @@ public class Stage : MonoBehaviour
         IsCleared = false;
         IsPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
+        uiManager.playerUI.player = player;
         uiManager.playerUI.UIUpdate();
+    }
+    public void InitStage(StageBoard board)
+    {
+        Time.timeScale = 1;
+        usedBombCount = 0;
+        ElapsedTime = 0;
+        IsCleared = false;
+        IsPaused = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        uiManager.playerUI.player = board.player;
+        uiManager.playerUI.UIUpdate();
+        
     }
 
     [ContextMenu("Clear Stage")]

@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
         stageManager = GameManager.Instance.StageManager;
         gameClearPanel.gameObject.SetActive(false);
         pausePanel.gameObject.SetActive(false);
+        fadeSquare.gameObject.SetActive(true);
         fadeSquare.FadeIn();
     }
 

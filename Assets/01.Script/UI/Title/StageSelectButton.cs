@@ -48,6 +48,7 @@ public class StageSelectButton : MonoBehaviour
     {
         // SceneManager.LoadScene("Seunghwa_JWPlayerCopy_InGameUI");
         TitleSceneAssistant.Instance.ActionAfterFadeOut(() =>  GameManager.Instance.StageManager.LoadStage(id + 1));
+        //TitleSceneAssistant.Instance.ActionAfterFadeOut(() =>  GameManager.Instance.StageManager.LoadStage());
     }
 }
 
