@@ -11,6 +11,15 @@ public class PortalGun : MonoBehaviour
     private Portal portal1;
     private Portal portal2;
 
+    [SerializeField]
+    private RenderTexture portalView1;
+    [SerializeField]
+    private Material portalView1Material;
+    [SerializeField]
+    private RenderTexture portalView2;
+    [SerializeField]
+    private Material portalView2Material;
+
     Portal currentPortal;
     private float rayLength = 15;
 
@@ -24,9 +33,14 @@ public class PortalGun : MonoBehaviour
         
         portal1.gameObject.SetActive(false);
         portal2.gameObject.SetActive(false);
+
+        portal1.SetPortalPair(portal2);
+        portal2.SetPortalPair(portal1);
+        
+        portal1.SetRenderTexture(portalView1, portalView1Material);
+        portal2.SetRenderTexture(portalView2, portalView2Material);
         
         currentPortal = portal1;
-
         portalColliderSize = portal1.GetComponent<BoxCollider>().size;
     }
 
@@ -51,6 +65,12 @@ public class PortalGun : MonoBehaviour
             currentPortal.gameObject.SetActive(true);
 
             currentPortal = currentPortal == portal1 ? portal2 : portal1;
+
+            if (portal1.gameObject.activeInHierarchy && portal2.gameObject.activeInHierarchy)
+            {
+                portal1.ActivatePortal();
+                portal2.ActivatePortal();
+            }
         }
     }
 }
