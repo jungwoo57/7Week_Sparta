@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rigid;
     private Player player;
+    private PortalGun portalGun;
 
     private const float rotateSmoothCoef = 20f;
 
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
     {
         player = GetComponent<Player>();
         rigid = GetComponent<Rigidbody>();
+        portalGun = GetComponent<PortalGun>();
         destAngle = cameraContainer.transform.eulerAngles;
     }
 
@@ -183,6 +185,16 @@ public class PlayerController : MonoBehaviour
                 Stage.Instance.ResumeStage();
             else
                 Stage.Instance.PauseStage();
+        }
+    }
+
+    public void ShotPortal(InputAction.CallbackContext context)
+    {
+        if (Stage.Instance.IsCleared) return;
+        if (context.phase == InputActionPhase.Started)
+        {
+            if(portalGun)
+                portalGun.Shot();
         }
     }
 }
