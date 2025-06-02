@@ -59,13 +59,18 @@ public class Player : MonoBehaviour, IAffected
         {
             playerManager.Player = this;
         }
-
      
         playerUI = Stage.Instance.uiManager.playerUI;
+
+        for (int i = 0; i < bomb.Length; i++)
+        {
+            playerUI.quickSlot.SetItemSprite(bomb[i].icon, i+1);
+        }
     }
     public void SpawnBomb()
     {
         if (coolTime > 0) return;
+        if (curBombIndex > maxBombIndex) return;
         GameObject spawnBomb = Instantiate(bomb[curBombIndex].bombPrefab);
         spawnBomb.transform.position = bombSpawnPos.position;
         spawnBomb.AddComponent<Rigidbody>();
@@ -81,19 +86,22 @@ public class Player : MonoBehaviour, IAffected
     {
         playerUI.quickSlot.FocusSlot(index);
         curBombIndex = index - 1;
-        if (curBombIndex >= maxBombIndex)
-        {
-            curBombIndex = maxBombIndex;
-
-        }
+        
         if (curBomb != null)
         {
             Destroy(curBomb);
         }
+        if (curBombIndex > maxBombIndex)
+        {
+            curBombData = null;
+            Stage.Instance.uiManager.playerUI.UIUpdate();
+            return;
+        }
         curBombData = bomb[curBombIndex];
         curBomb = Instantiate(bomb[curBombIndex].equipPrefab, bombPos);
         curBomb.transform.position = bombPos.position;
-        Stage.Instance.uiManager.playerUI.UIUpdate();
+
+        playerUI.UIUpdate();
     }
 
     public void OnAffected(Vector3 pos, float force, float radius, BombType type) 
@@ -102,5 +110,10 @@ public class Player : MonoBehaviour, IAffected
         {
             rigid.AddForce(Vector3.up * force, ForceMode.Impulse);
         }
+    }
+
+    public int GetCurBombIndex()
+    {
+        return curBombIndex;
     }
 }

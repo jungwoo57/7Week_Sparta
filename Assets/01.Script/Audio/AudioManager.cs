@@ -46,7 +46,7 @@ namespace _01.Script.Audio
                     sfxSourcePool.Add(source);
                 }
 
-                LoadVolumeSet();
+                //LoadVolumeSet();
             }
             else
             {

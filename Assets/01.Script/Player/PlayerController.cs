@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 public class PlayerController : MonoBehaviour
 {
@@ -162,6 +163,16 @@ public class PlayerController : MonoBehaviour
             player.SwapBomb(4);
         }
     }
+
+    public void SwapBomb5(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            player.SwapBomb(5);
+        }
+    }
+
+
 
     public void KeyDownEsc(InputAction.CallbackContext context)
     {

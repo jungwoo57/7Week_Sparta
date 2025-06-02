@@ -482,9 +482,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c368a5795f5084895325b7822aecf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 3144124750851725672}
+  itemIcon: {fileID: 8707384417980137887}
   coolDownIndicator: {fileID: 4537728137754345231}
   itemCountText: {fileID: 8473120581613723519}
+  outline: {fileID: 0}
 --- !u!114 &3144124750851725672
 MonoBehaviour:
   m_ObjectHideFlags: 0

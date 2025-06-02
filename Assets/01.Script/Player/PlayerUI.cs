@@ -15,6 +15,18 @@ public class PlayerUI : MonoBehaviour
     public void UIUpdate()
     {
         bombCountText.text = " X " + Stage.Instance.usedBombCount;
-        bombName.text = player.curBombData.bombName; // 
+        if (!player.curBombData)
+        {
+            bombName.text = "";
+            bombImage.sprite = null;
+            bombImage.gameObject.SetActive(false);
+        }
+        else
+        {
+            bombName.text = player.curBombData.bombName;
+            bombImage.sprite = player.curBombData.icon;
+            bombImage.gameObject.SetActive(true);
+        }
     }
+    
 }

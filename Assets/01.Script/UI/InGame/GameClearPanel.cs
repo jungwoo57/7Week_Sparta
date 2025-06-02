@@ -1,4 +1,6 @@
 using DG.Tweening;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,14 +14,17 @@ public class GameClearPanel : MonoBehaviour
     [SerializeField]
     private RectTransform restartBtnTransform;
     private Vector2 restartBtnPos;
+    private CanvasGroup restartBtnCanvasGroup;
     
     [SerializeField]
     private RectTransform nextStageBtnTransform;
     private Vector2 nextStageBtnPos;
+    private CanvasGroup nextStageBtnCanvasGroup;
     
     [SerializeField]
     private RectTransform quitBtnTransform;
     private Vector2 quitBtnPos;
+    private CanvasGroup quitBtnCanvasGroup;
     
     [SerializeField]
     TextMeshProUGUI clearTimeText;
@@ -35,6 +40,10 @@ public class GameClearPanel : MonoBehaviour
         restartBtnPos = restartBtnTransform.anchoredPosition;
         nextStageBtnPos = nextStageBtnTransform.anchoredPosition;
         quitBtnPos = quitBtnTransform.anchoredPosition;
+        
+        quitBtnCanvasGroup = quitBtnTransform.gameObject.GetComponent<CanvasGroup>();
+        restartBtnCanvasGroup = restartBtnTransform.gameObject.GetComponent<CanvasGroup>();
+        nextStageBtnCanvasGroup = nextStageBtnTransform.gameObject.GetComponent<CanvasGroup>();
     }
 
     private void OnEnable()
@@ -67,9 +76,17 @@ public class GameClearPanel : MonoBehaviour
         nextStageBtnTransform.anchoredPosition = nextStageBtnPos - new Vector2(0,50);
         quitBtnTransform.anchoredPosition = quitBtnPos - new Vector2(0,50);
         
-        restartBtnTransform.DOAnchorPos(restartBtnPos, 0.6f).SetEase(Ease.OutQuad).SetDelay(0.2f);
-        nextStageBtnTransform.DOAnchorPos(nextStageBtnPos, 0.6f).SetEase(Ease.OutQuad).SetDelay(0.3f);
-        quitBtnTransform.DOAnchorPos(quitBtnPos, 0.6f).SetEase(Ease.OutQuad).SetDelay(0.4f);
+        restartBtnCanvasGroup.alpha = 0;
+        nextStageBtnCanvasGroup.alpha = 0;
+        quitBtnCanvasGroup.alpha = 0;
+
+        restartBtnCanvasGroup.DOFade(1f, 0.6f).SetDelay(0.5f);
+        nextStageBtnCanvasGroup.DOFade(1f, 0.6f).SetDelay(0.8f);
+        quitBtnCanvasGroup.DOFade(1f, 0.6f).SetDelay(1f);
+        
+        restartBtnTransform.DOAnchorPos(restartBtnPos, 0.6f).SetEase(Ease.OutQuad).SetDelay(0.5f);
+        nextStageBtnTransform.DOAnchorPos(nextStageBtnPos, 0.6f).SetEase(Ease.OutQuad).SetDelay(0.8f);
+        quitBtnTransform.DOAnchorPos(quitBtnPos, 0.6f).SetEase(Ease.OutQuad).SetDelay(1f);
     }
 
     public void SetClearTimeText(float elapsedTime)
@@ -88,8 +105,15 @@ public class GameClearPanel : MonoBehaviour
 
     public void OnClickNextStage()
     {
+        StartCoroutine(NextStage());
+        
+    }
+
+    IEnumerator NextStage()
+    {
+        Stage.Instance.uiManager.FadeOut();
+        yield return new WaitForSeconds(1);
         stageManager.NextStage();
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     
