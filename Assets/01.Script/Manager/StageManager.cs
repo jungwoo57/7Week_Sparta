@@ -42,7 +42,7 @@ public class StageManager : MonoBehaviour
 
         for (int i = 0; i < stageCount; i++)
         {
-            StageState state = (i == 0) ? StageState.Open : StageState.Locked;
+            StageState state = StageState.Open;
 
             StageData stageData = new StageData
             {
