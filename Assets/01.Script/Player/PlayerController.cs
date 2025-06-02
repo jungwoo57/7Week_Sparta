@@ -44,6 +44,23 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        Stand();
+    }
+
+    private void Stand()
+    {
+        // 현재 회전을 오일러 각도로 변환
+        Vector3 currentEuler = transform.eulerAngles;
+
+        // 목표 회전: X축은 유지, YZ는 0
+        Vector3 targetEuler = new Vector3(0, currentEuler.y, 0f);
+        
+        // 오일러 -> 쿼터니언으로 변환해서 보간
+        Quaternion currentRotation = transform.rotation;
+        Quaternion targetRotation = Quaternion.Euler(targetEuler);
+
+        // Lerp로 부드럽게 회전
+        transform.rotation = Quaternion.Lerp(currentRotation, targetRotation, Time.deltaTime * 15);
     }
 
     private void LateUpdate()
@@ -196,5 +213,12 @@ public class PlayerController : MonoBehaviour
             if(portalGun)
                 portalGun.Shot();
         }
+    }
+
+    public void ChangeLookDirection(Quaternion portalRotDiff)
+    {
+        Quaternion currentRotation = Quaternion.Euler(destAngle);  // 오일러 → 쿼터니언
+        Quaternion newRotation = portalRotDiff * currentRotation;  // 회전 적용
+        destAngle = newRotation.eulerAngles;                       // 다시 오일러로 저장
     }
 }

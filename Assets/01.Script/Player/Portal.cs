@@ -11,18 +11,21 @@ public class Portal : MonoBehaviour
     private GameObject portalCameraContainer;
     [SerializeField]
     private Renderer portalTextureRenderer;
-    
+
     public Material portalCameraMaterial;
-    
+
+    private PortalGun portalGun;
     private Transform playerPos;
     private Portal partnerPortal;
-    
+
     Material originalMaterial;
-    
+
     public bool IsActivated { get; private set; }
+    private bool hasTransferred;
 
     private void Awake()
     {
+        hasTransferred = false;
         portalCameraContainer.SetActive(false);
         IsActivated = false;
         originalMaterial = portalTextureRenderer.material;
@@ -44,10 +47,12 @@ public class Portal : MonoBehaviour
         }
     }
 
-    public void SetPortalPair(Portal anotherPortal)
+    public void Init(PortalGun _portalGun, Portal anotherPortal)
     {
+        portalGun = _portalGun;
         partnerPortal = anotherPortal;
     }
+
     public void SetRenderTexture(RenderTexture renderTexture, Material cameraMaterial)
     {
         portalCamera.targetTexture = renderTexture;
@@ -65,4 +70,35 @@ public class Portal : MonoBehaviour
         portalCameraContainer.SetActive(false);
         portalTextureRenderer.material = originalMaterial;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (portalGun.hasTransferred)
+            {
+                portalGun.hasTransferred = false;
+                return;
+            }
+
+            other.transform.position = partnerPortal.transform.position + (other.transform.position - transform.position);
+
+            Quaternion oppositeRotation = Quaternion.Euler(0, 180, 0) * transform.rotation; // 포탈의 뒷면방향
+            Quaternion portalRotDiff = partnerPortal.transform.rotation * Quaternion.Inverse(oppositeRotation); // 상대 포탈의 앞방향과 각도 차이
+            
+            other.transform.rotation= portalRotDiff * other.transform.rotation;
+            
+            other.GetComponent<PlayerController>().ChangeLookDirection(portalRotDiff);
+
+            portalGun.hasTransferred = true;
+        }
+    }
+
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     if (other.CompareTag("Player") && portalGun.hasTransferred)
+    //     {
+    //         portalGun.hasTransferred = false;
+    //     }
+    // }
 }

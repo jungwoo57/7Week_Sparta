@@ -21,7 +21,9 @@ public class PortalGun : MonoBehaviour
     private Material portalView2Material;
 
     Portal currentPortal;
-    private float rayLength = 15;
+    private const float RayLength = 25;
+    
+    public bool hasTransferred = false;
 
     private void Awake()
     {
@@ -34,8 +36,8 @@ public class PortalGun : MonoBehaviour
         portal1.gameObject.SetActive(false);
         portal2.gameObject.SetActive(false);
 
-        portal1.SetPortalPair(portal2);
-        portal2.SetPortalPair(portal1);
+        portal1.Init(this, portal2);
+        portal2.Init(this, portal1);
         
         portal1.SetRenderTexture(portalView1, portalView1Material);
         portal2.SetRenderTexture(portalView2, portalView2Material);
@@ -57,7 +59,7 @@ public class PortalGun : MonoBehaviour
         // if (Physics.BoxCast(Camera.main.transform.position, portalColliderSize / 2, Camera.main.transform.forward,
         //         out hit, Quaternion.identity, rayLength))
 
-        if (Physics.Raycast(ray, out hit, rayLength, LayerMask.GetMask("Wall")))
+        if (Physics.Raycast(ray, out hit, RayLength, LayerMask.GetMask("Wall")))
         {
             currentPortal.transform.position = hit.point;
             currentPortal.transform.rotation = Quaternion.LookRotation(-hit.normal);
